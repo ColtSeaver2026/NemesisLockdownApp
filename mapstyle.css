@@ -1,0 +1,211 @@
+
+*{
+}
+
+body {
+  margin: 0;
+  background-color: black;
+}
+
+h2{
+  text-align: center; 
+}
+
+h3{
+  color: white; 
+  margin:0; 
+  padding: 10px; 
+}
+
+.map {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  c
+}
+
+.base {
+  width: 100%;
+  display: block;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  
+  
+}
+
+.hex {
+   fill: rgba(0, 0, 255, 0);
+  
+
+  cursor: pointer;
+  transition: 0.2s;
+
+
+}
+
+.hex:hover {
+  fill: #7a7a7a;
+
+  transform-origin: center;
+}
+
+.hex.active {
+  fill: rgba(0, 255, 0, 0.4);
+}
+
+
+/* Text im Hexfeld */
+.room-label {
+  
+  font-size: 35px;
+ 
+  fill: #F5F1E8;
+  stroke: #222222;
+  stroke-width: 4px;
+  paint-order: stroke fill;
+
+  text-shadow:
+     0 0 10px #B33A3A,
+     0 0 20px #B33A3A,
+     0 0 30px #B33A3A,
+     0 0 10px #B33A3A,
+     0 0 20px #B33A3A,
+     0 0 30px #B33A3A;
+  
+  text-anchor: middle;
+  dominant-baseline: middle;
+  pointer-events: none;
+
+
+}
+
+/* Modal */
+
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 1000;
+}
+
+.hidden {
+  display: none;
+}
+
+.modal-content {
+  background: #222;
+  padding: 30px;
+  border-radius: 12px;
+  color: white;
+  min-width: 300px;
+  
+
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.modal-buttons button {
+  flex: 1;
+}
+
+.room-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content:center; 
+  
+  width: 80vw; 
+  
+  gap: 10px;
+}
+
+
+.room-option {
+  padding: 12px;
+  font-size: 12px;
+  cursor: pointer;
+  
+  text-align: center; 
+  
+  width: 155px; 
+
+  background: #444;
+  color: white;
+  border: 2px solid #666;
+  border-radius: 8px;
+
+  transition: 0.2s;
+}
+
+.room-option:hover {
+  background: #666;
+  
+}
+
+.unlocked {
+  background: green;
+  pointer-events: none;
+  opacity: 0.5;
+  cursor: default;
+}
+
+#cancelRoom, #cancelRoomInfo {
+  margin-top: 10px;
+  padding: 10px;
+
+  background: transparent;
+  color: #ccc;
+
+  border: none;
+
+  font-size: 15px;
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+#cancelRoom:hover, #cancelRoomInfo:hover {
+  color: white;
+  text-decoration: underline;
+}
+
+.roomFunctionWrapper{
+  display: flex; 
+  align-items: center;
+  font-size: 20px; 
+  
+}
+
+.roomCost {
+  width: 50px;          /* feste Breite für links */
+  height: 50px; 
+  display: flex;
+  align-items: center;      /* vertikal zentriert */
+  justify-content: center;  /* horizontal zentriert */
+  font-size: 40px; 
+
+ 
+
+}
+
+.roomFunctionHeader {
+  flex: 1;              /* nimmt restlichen Platz */
+  text-align: center;   /* zentriert den Text */
+}
+
