@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Map</title>
+
+  <!-- hier später dein CSS -->
+  <link rel="stylesheet" href="mapstyle.css">
+</head>
+
+<body>
+
+  <div class="map">
+    <img src="https://s1.directupload.eu/images/260528/xe84tda3.png" class="base">
+
+    <svg class="overlay" viewBox="0 0 1100 1100" preserveAspectRatio="xMidYMid meet">
+
+      <polygon class="hex II" data-id="1"
+      points="309,-73 387,-73 425,-6 387,58 309,58 273,-10"/>
+
+      <polygon class="hex II" data-id="2"
+      points="227,150 305,150 343,217 305,281 227,281 191,213"/>
+
+      <polygon class="hex II" data-id="3"
+      points="378,365 456,365 494,432 456,496 378,496 342,428"/>
+
+      <polygon class="hex I" data-id="4"
+      points="679,363 757,363 795,430 757,494 679,494 643,426"/>
+
+      <polygon class="hex I" data-id="5"
+      points="871,383 949,383 987,450 949,514 871,514 835,446"/>
+
+      <polygon class="hex I" data-id="6"
+      points="257,514 335,514 373,581 335,645 257,645 221,577"/>
+
+      <polygon class="hex II" data-id="7"
+      points="383,657 461,657 499,724 461,788 383,788 347,720"/>
+
+      <polygon class="hex I" data-id="8"
+      points="689,657 767,657 805,724 767,788 689,788 653,720"/>
+
+      <polygon class="hex I" data-id="9"
+      points="871,582 949,582 987,649 949,713 871,713 835,645"/>
+
+      <polygon class="hex I" data-id="10"
+      points="431,838 509,838 547,905 509,969 431,969 395,901"/>
+
+      <polygon class="hex II" data-id="11"
+      points="603,898 681,898 719,965 681,1029 603,1029 567,961"/>
+
+      <polygon class="hex I" data-id="12"
+      points="871,898 949,898 987,965 949,1029 871,1029 835,961"/>
+
+      <polygon class="hex II" data-id="13"
+      points="243,1057 321,1057 359,1124 321,1188 243,1188 207,1120"/>
+
+      <polygon class="hex I" data-id="14"
+      points="426,1057 504,1057 542,1124 504,1188 426,1188 390,1120"/>
+
+      <polygon class="hex I" data-id="15"
+      points="619,1145 697,1145 735,1212 697,1276 619,1276 583,1208"/>
+
+      <polygon class="hex I" data-id="16"
+      points="865,1145 943,1145 981,1212 943,1276 865,1276 829,1208"/>
+
+    </svg>
+  </div>
+
+  <!-- Auswahlfenster-->
+  <div class="modal hidden" id="roomModal">
+    <div class="modal-content">
+
+      <h2>Raum auswählen</h2>
+
+      <div class="room-list" id="roomList"></div>
+
+      <button id="cancelRoom">Abbrechen</button>
+    </div>
+  </div>
+
+  <!-- unlockedRooms Leiste-->
+
+  <div class="unlocked-rooms" id="unlockedRooms">
+    <h3>Entdeckte Räume I:</h3>
+    <div class="unlocked-rooms" id="unlockedRooms1"></div>
+
+    <h3>Entdeckte Räume II:</h3>
+    <div class="unlocked-rooms" id="unlockedRooms2"></div>
+  </div>
+
+  <!-- Info Modal-->
+  <div class="modal hidden" id="infoModal">
+    <div class="modal-content">
+
+      <h2 id="roomName">Archiv</h2>
+
+      <div id="function1">
+        <div class="roomFunctionWrapper" id="roomFunctionWrapper1">
+          <div class="roomCost" id="roomCost1">2</div>
+          <div class="roomFunctionHeader" id="roomFunctionHeader1">
+            Untersuche das Archiv:
+          </div>
+        </div>
+
+        <div id="functionDescripton1">
+          Du kannst diese Aktion nur ausführen, wenn dein Wissensplättchen inaktiv ist...
+        </div>
+      </div>
+
+      <div class="hidden" id="function2">
+        <div class="roomFunctionWrapper" id="roomFunctionWrapper2">
+          <div class="roomCost" id="roomCost2">2</div>
+          <div class="roomFunctionHeader" id="roomFunctionHeader2">
+            Untersuche das Archiv:
+          </div>
+        </div>
+
+        <div id="functionDescripton2">
+          Du kannst diese Aktion nur ausführen, wenn dein Wissensplättchen inaktiv ist...
+        </div>
+      </div>
+
+      <button id="cancelRoomInfo">Schließen</button>
+
+    </div>
+  </div>
+
+  <!-- JS -->
+  <script src="mapscript.js"></script>
+
+</body>
+</html>
