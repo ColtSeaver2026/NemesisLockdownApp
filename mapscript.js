@@ -247,6 +247,7 @@ function showRooms(category, hex){
          
     checkLocked();
     listUnlockedRooms();
+    saveGame();
 
     modal.classList.add("hidden");
        })
@@ -281,7 +282,7 @@ document.querySelectorAll(".room-option").forEach(button => {
     createLabel(currentHex, roomName);
     
    
-
+    
     modal.classList.add("hidden");
 
   });
@@ -433,13 +434,60 @@ function showRoomInfo(clickedRoom){
   
 }
 
-
   cancelRoomInfoBtn.addEventListener("click", () => {
   
   function2.classList.add("hidden");
   infoModal.classList.add("hidden");
 
 });
+
+
+function saveGame() {
+  const labels = [];
+
+  document.querySelectorAll(".room-label").forEach(label => {
+    labels.push({
+      id: label.dataset.id,
+      text: label.textContent
+    });
+  });
+
+  localStorage.setItem("roomsData", JSON.stringify(rooms));
+  localStorage.setItem("labelsData", JSON.stringify(labels));
+}
+
+function loadGame() {
+  const savedRooms = JSON.parse(localStorage.getItem("roomsData"));
+  const savedLabels = JSON.parse(localStorage.getItem("labelsData"));
+
+  if (!savedRooms || !savedLabels) return;
+
+  // Raumdaten wiederherstellen
+  rooms.forEach((room, index) => {
+    if (savedRooms[index]) {
+      room.unlocked = savedRooms[index].unlocked;
+    }
+  });
+
+  // Alte Labels entfernen
+  document.querySelectorAll(".room-label").forEach(label => label.remove());
+
+  // Labels neu erzeugen
+  savedLabels.forEach(savedLabel => {
+    const hex = document.querySelector(
+      `.hex[data-id="${savedLabel.id}"]`
+    );
+
+    if (hex) {
+      createLabel(hex, savedLabel.text);
+    }
+  });
+
+  checkLocked();
+  listUnlockedRooms();
+}
+
+loadGame();
   
   
 
