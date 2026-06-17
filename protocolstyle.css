@@ -12,6 +12,15 @@ body{
   color:white;
 }
 
+
+.control-wrapper{
+  display: flex; 
+  justify-content: space-between;
+  
+  margin-bottom: 20px; 
+
+}
+
 /* LAYOUT */
 
 .layout{
