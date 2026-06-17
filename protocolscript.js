@@ -1,3 +1,22 @@
+const switchToMap = document.getElementById("switchToMap")
+
+switchToMap.addEventListener("click", ()=>{
+  
+  
+      location.href = "https://coltseaver2026.github.io/NemesisLockdownApp/map.html";
+})
+
+
+
+const resetBtn = document.getElementById("resetBtn");
+
+resetBtn.addEventListener("click", () => {
+
+  localStorage.removeItem("protocolData");
+  location.reload();
+
+});
+
 /* TASKS */
 
 const signalTask =
@@ -79,6 +98,9 @@ document.querySelectorAll(".mission-tile").forEach(button => {
     checkKapsel();
     checkIsolation();
     checkRescue();
+    
+    saveGame();
+
 
   });
 
@@ -230,12 +252,16 @@ function checkRescue(){
 signalTask.addEventListener("click", () => {
 
   signalTask.classList.toggle("completed");
+  saveGame();
+
 
 });
 
 knowledgeTask.addEventListener("click", () => {
 
   knowledgeTask.classList.toggle("completed");
+  saveGame();
+
 
 });
 
@@ -385,3 +411,74 @@ contaminationEvent.addEventListener("click", () => {
   }
 
 });
+
+
+
+function saveGame() {
+
+  const activeButtons = [];
+
+  document.querySelectorAll(".mission-tile.active").forEach(button => {
+    activeButtons.push(button.textContent.trim());
+  });
+
+  const completedTasks = [];
+
+  document.querySelectorAll(".task-tile.completed").forEach(task => {
+    completedTasks.push(task.id);
+  });
+
+  const gameData = {
+    activeButtons,
+    completedTasks
+  };
+
+  localStorage.setItem(
+    "protocolData",
+    JSON.stringify(gameData)
+  );
+}
+
+
+function loadGame() {
+
+  const savedData =
+    localStorage.getItem("protocolData");
+
+  if (!savedData) return;
+
+  const gameData =
+    JSON.parse(savedData);
+
+  document.querySelectorAll(".mission-tile").forEach(button => {
+
+    if (
+      gameData.activeButtons.includes(
+        button.textContent.trim()
+      )
+    ) {
+      button.classList.add("active");
+    }
+
+  });
+
+  gameData.completedTasks.forEach(id => {
+
+    const task = document.getElementById(id);
+
+    if (task) {
+      task.classList.add("completed");
+    }
+
+  });
+
+  checkSignal();
+  checkKnowledge();
+  checkKapsel();
+  checkIsolation();
+  checkRescue();
+}
+
+
+
+loadGame();
