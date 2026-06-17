@@ -1,5 +1,7 @@
 
 *{
+  border: 1px solid red; 
+
 }
 
 body {
@@ -21,7 +23,7 @@ h3{
   position: relative;
   width: 100%;
   max-width: 900px;
-  c
+  
 }
 
 .base {
@@ -136,7 +138,7 @@ h3{
 }
 
 
-.room-option {
+.room-option, .control {
   padding: 12px;
   font-size: 12px;
   cursor: pointer;
@@ -153,8 +155,18 @@ h3{
   transition: 0.2s;
 }
 
-.room-option:hover {
+.room-option:hover, .control:hover{
   background: #666;
+  
+}
+
+.button-wrapper{
+  display: flex; 
+  justify-content: space-between;
+
+  width: 100%;
+  max-width: 900px;
+  
   
 }
 
