@@ -1,3 +1,5 @@
+const switchToProtocolBtn = document.getElementById("switchToProtocol")
+
 const modal = document.getElementById("roomModal");
 const cancelBtn = document.getElementById("cancelRoom");
 
@@ -15,6 +17,8 @@ const roomFunctionWrapper2 = document.getElementById("roomFunctionWrapper2")
 const functionDescripton1 = document.getElementById("functionDescripton1")
 const functionDescripton2 = document.getElementById("functionDescripton2")
 const cancelRoomInfoBtn = document.getElementById("cancelRoomInfo")
+
+const resetRooms = document.getElementById("resetRooms")
 
 const overlay = document.querySelector(".overlay");
 
@@ -172,6 +176,14 @@ const rooms = [
 }
 ]
 
+
+/* -------------------------------- */
+/* Wechsel zur Eindämmungsprotokoll Übersicht */
+/* -------------------------------- */
+
+switchToProtocolBtn.addEventListener("click", () => {
+    location.href = "https://coltseaver2026.github.io/NemesisLockdownApp/protocol.html";
+});
 
 /* -------------------------------- */
 /* Start: Fragezeichen erzeugen */
@@ -486,6 +498,19 @@ function loadGame() {
   checkLocked();
   listUnlockedRooms();
 }
+
+
+function resetGame() {
+  localStorage.removeItem("roomsData");
+  localStorage.removeItem("labelsData");
+  
+}
+
+
+resetRooms.addEventListener("click", ()=>{
+   resetGame()
+})
+
 
 loadGame();
   
