@@ -3,7 +3,8 @@ const switchToMap = document.getElementById("switchToMap")
 switchToMap.addEventListener("click", ()=>{
   
   
-      window.location.replace("https://coltseaver2026.github.io/NemesisLockdownApp/protocol.html");
+        location.href = "https://coltseaver2026.github.io/NemesisLockdownApp/map.html";
+
 })
 
 
