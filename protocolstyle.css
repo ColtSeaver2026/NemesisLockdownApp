@@ -48,7 +48,7 @@ body{
 
 /* BUTTONS */
 
-.mission-tile{
+.mission-tile, .control-button{
   background:#1f2937;
   color:white;
 
@@ -75,12 +75,24 @@ body{
   );
 }
 
-.mission-tile:hover{
+.mission-tile:hover, .control-button:hover{
   background:#374151;
 
   transform:
     translateX(5px)
     scale(1.02);
+}
+
+
+.control-button:focus,
+.control-button:active {
+  outline: none;
+  box-shadow: none;
+}
+
+
+.control-button:focus-visible {
+  outline: none;
 }
 
 /* AKTIV */
