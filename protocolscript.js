@@ -3,7 +3,7 @@ const switchToMap = document.getElementById("switchToMap")
 switchToMap.addEventListener("click", ()=>{
   
   
-      location.href = "https://coltseaver2026.github.io/NemesisLockdownApp/map.html";
+      window.location.replace("https://coltseaver2026.github.io/NemesisLockdownApp/protocol.html");
 })
 
 
@@ -482,3 +482,5 @@ function loadGame() {
 
 
 loadGame();
+
+
