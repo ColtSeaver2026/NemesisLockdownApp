@@ -503,7 +503,7 @@ function loadGame() {
 function resetGame() {
   localStorage.removeItem("roomsData");
   localStorage.removeItem("labelsData");
-  
+  location.reload();
 }
 
 
