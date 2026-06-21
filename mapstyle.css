@@ -140,23 +140,50 @@ h3{
 .room-option, .control {
   padding: 12px;
   font-size: 12px;
-  cursor: pointer;
-  
   text-align: center; 
   
-  width: 155px; 
-
-  background: #444;
+  width: 155px;    
+ 
+    
+  background: #1a1a1a;
   color: white;
-  border: 2px solid #666;
-  border-radius: 8px;
 
+  border: none;
+  border-left: 5px solid  #B33A3A;
+
+  font-size: 12px;
+  line-height: 1.4;
+
+  cursor: pointer;
   transition: 0.2s;
+
+  clip-path: polygon(
+    12px 0,
+    100% 0,
+    100% calc(100% - 12px),
+    calc(100% - 12px) 100%,
+    0 100%,
+    0 12px
+  );
+}
+
+#switchToProtocol{
+  width: 200px; 
 }
 
 .room-option:hover, .control:hover{
   background: #666;
+  transform: translateX(5px) scale(1.02);
   
+}
+
+.margin {
+  margin: 15px; 
+}
+
+.margin-right{
+    margin: 0 15px 0 0; 
+
 }
 
 .button-wrapper{
