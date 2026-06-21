@@ -25,17 +25,17 @@ const overlay = document.querySelector(".overlay");
 let currentHex = null;
 
 const rooms = [
-  {category: "I", name: "I", unlocked: false},
+  {category: "I", name: "I", shortName: "I", unlocked: false},
   
-  {category: "I", name: "Archiv", unlocked: false, cost1: "2", functionHeader1: "Untersuche das Archiv:", function1: "Du kannst diese Aktion nur ausführen, wenn dein Wissensplättchen inaktiv ist. Erhalte 2 Wissen und drehe dein Wissensplättchen auf die aktive Seite. Schaue dir dann verdeckt 1 Eindämmungsprotokollplättchen an (auch außerhalb deiner Sektion)."},
+  {category: "I", name: "Archiv", shortName: "Archiv", unlocked: false, cost1: "2", functionHeader1: "Untersuche das Archiv:", function1: "Du kannst diese Aktion nur ausführen, wenn dein Wissensplättchen inaktiv ist. Erhalte 2 Wissen und drehe dein Wissensplättchen auf die aktive Seite. Schaue dir dann verdeckt 1 Eindämmungsprotokollplättchen an (auch außerhalb deiner Sektion)."},
   
-  {category: "I", name: "Dekontaminationsraum", unlocked: false, cost1: "2", functionHeader1: "Führe das Dekontaminationsverfahren durch:", function1: "Scanne alle deine Kontaminationskarten auf der Hand. Entferne alle INFIZIERT-Karten. Falls du eine Larve auf deiner Charaktertafel hast, entferne sie. Lege einen Schleimmarker von deiner Charaktertafel ab, falls du einen hast."},
+  {category: "I", name: "Dekontaminationsraum", shortName: "Dekontamination", unlocked: false, cost1: "2", functionHeader1: "Führe das Dekontaminationsverfahren durch:", function1: "Scanne alle deine Kontaminationskarten auf der Hand. Entferne alle INFIZIERT-Karten. Falls du eine Larve auf deiner Charaktertafel hast, entferne sie. Lege einen Schleimmarker von deiner Charaktertafel ab, falls du einen hast."},
   
-  {category: "I", name: "Erste-Hilfe-Station", unlocked: false, cost1: "2", functionHeader1: "Behandle deine Wunden:", function1: "Verbinde alle deine Schweren Wunden ODER heile 1 deiner verbundenen Schweren Wunden ODER heile alle deine Leichten Wunden."},
+  {category: "I", name: "Erste-Hilfe-Station", shortName: "Erste-Hilfe", unlocked: false, cost1: "2", functionHeader1: "Behandle deine Wunden:", function1: "Verbinde alle deine Schweren Wunden ODER heile 1 deiner verbundenen Schweren Wunden ODER heile alle deine Leichten Wunden."},
   
-  {category: "I", name: "Frachtversandsystem A", unlocked: false, cost1: "2", functionHeader1: "Steige in FVS-Kapsel A ein:", function1: "Du kannst diese Raumaktion nur ausführen, falls sich das Zeitplättchen auf einem mit einem FVS-Plättchen markierten Feld befindet und das FVS-Kapsel-Feld „A“ frei ist.  Nach dem Einsteigen legst du alle Handkarten ab und passt automatisch. Platziere deinen Charakter auf dem entsprechenden FVS-Kapsel-Feld auf dem Spielplan. In der Ereignisphase hast du die Möglichkeit, mit dieser FVS-Kapsel zu entkommen. Charaktere, die sich auf einem FVS-Kapsel-Feld befinden, können nicht Ziel von Spieleffekten werden, sofern nicht anders angegeben. Falls du es nicht schaffst mit der FVS-Kapsel zu entkommen, erleidest du 1 Schwere Wunde."},
+  {category: "I", name: "Frachtversandsystem A", shortName: "FVS-A", unlocked: false, cost1: "2", functionHeader1: "Steige in FVS-Kapsel A ein:", function1: "Du kannst diese Raumaktion nur ausführen, falls sich das Zeitplättchen auf einem mit einem FVS-Plättchen markierten Feld befindet und das FVS-Kapsel-Feld „A“ frei ist.  Nach dem Einsteigen legst du alle Handkarten ab und passt automatisch. Platziere deinen Charakter auf dem entsprechenden FVS-Kapsel-Feld auf dem Spielplan. In der Ereignisphase hast du die Möglichkeit, mit dieser FVS-Kapsel zu entkommen. Charaktere, die sich auf einem FVS-Kapsel-Feld befinden, können nicht Ziel von Spieleffekten werden, sofern nicht anders angegeben. Falls du es nicht schaffst mit der FVS-Kapsel zu entkommen, erleidest du 1 Schwere Wunde."},
   
-  {category: "I", name: "Generatorraum", unlocked: false, cost1: "2",
+  {category: "I", name: "Generatorraum", shortName: "Generator", unlocked: false, cost1: "2",
     functionHeader1: "Stoppe die Selbstzerstörung",
     function1: "Liegt das Selbstzerstörungsplättchen mit der gelben Seite nach oben auf der Zeitleiste, entferne es von der Zeitleiste.",
 
@@ -45,6 +45,7 @@ const rooms = [
   {
     category: "I",
     name: "Höhleneingang",
+    shortName: "Höhle",
     unlocked: false,
     cost1: "2",
     functionHeader1: "Bewege dich durch Wartungskorridore",
@@ -54,6 +55,7 @@ const rooms = [
 {
     category: "I",
     name: "Kommunikationszentrale",
+    shortName: "Kommunikationsz.",
     unlocked: false,
     cost1: "2",
 
@@ -67,6 +69,7 @@ const rooms = [
   {
     category: "I",
     name: "Kühlsystem",
+    shortName: "Kühlsystem",
     unlocked: false,
     cost1: "2",
 
@@ -77,6 +80,7 @@ const rooms = [
   {
     category: "I",
     name: "Labor",
+    shortName: "Labor",
     unlocked: false,
     cost1: "2",
 
@@ -87,6 +91,7 @@ const rooms = [
   {
     category: "I",
     name: "Nest",
+    shortName: "Nest",
     unlocked: false,
     cost1: "2",
 
@@ -95,11 +100,12 @@ const rooms = [
 },
     
     
-  {category: "II", name: "II", unlocked: false},
+  {category: "II", name: "II", shortName: "II", unlocked: false},
   
   {
     category: "II",
     name: "Abwehrsystem",
+    shortName: "Abwehrsystem",
     unlocked: false,
     cost1: "2",
 
@@ -111,6 +117,7 @@ const rooms = [
   {
     category: "II",
     name: "Chirurgie",
+    shortName: "Chirurgie",
     unlocked: false,
     cost1: "2",
 
@@ -118,14 +125,16 @@ const rooms = [
     function1: "Scanne alle deine Kontaminationskarten (auf der Hand sowie im Aktions- und Ablagestapel) und entferne alle INFIZIERT-Karten. Falls sich eine Larve auf deiner Charaktertafel befindet, entferne sie ebenfalls. Nach dem Scannen erleidest du 1 Leichte Wunde und passt automatisch für diese Runde. Mische anschließend alle deine Karten (auf der Hand sowie im Aktions- und Ablagestapel) zu einem neuen Aktionsstapel."
 },
     
-  {category: "II", name: "Frachtversandsystem B", unlocked: false, cost1: "2", functionHeader1: "Steige in FVS-Kapsel B ein:", function1: "Du kannst diese Raumaktion nur ausführen, falls sich das Zeitplättchen auf einem mit einem FVS-Plättchen markierten Feld befindet und das FVS-Kapsel-Feld „B“ frei ist.  Nach dem Einsteigen legst du alle Handkarten ab und passt automatisch. Platziere deinen Charakter auf dem entsprechenden FVS-Kapsel-Feld auf dem Spielplan. In der Ereignisphase hast du die Möglichkeit, mit dieser FVS-Kapsel zu entkommen. Charaktere, die sich auf einem FVS-Kapsel-Feld befinden, können nicht Ziel von Spieleffekten werden, sofern nicht anders angegeben. Falls du es nicht schaffst mit der FVS-Kapsel zu entkommen, erleidest du 1 Schwere Wunde."},
+  {category: "II", name: "Frachtversandsystem B", shortName: "FVS-B",
+ unlocked: false, cost1: "2", functionHeader1: "Steige in FVS-Kapsel B ein:", function1: "Du kannst diese Raumaktion nur ausführen, falls sich das Zeitplättchen auf einem mit einem FVS-Plättchen markierten Feld befindet und das FVS-Kapsel-Feld „B“ frei ist.  Nach dem Einsteigen legst du alle Handkarten ab und passt automatisch. Platziere deinen Charakter auf dem entsprechenden FVS-Kapsel-Feld auf dem Spielplan. In der Ereignisphase hast du die Möglichkeit, mit dieser FVS-Kapsel zu entkommen. Charaktere, die sich auf einem FVS-Kapsel-Feld befinden, können nicht Ziel von Spieleffekten werden, sofern nicht anders angegeben. Falls du es nicht schaffst mit der FVS-Kapsel zu entkommen, erleidest du 1 Schwere Wunde."},
    
    
-  {category: "II", name: "Frachtversandsystem C", unlocked: false, cost1: "2", functionHeader1: "Steige in FVS-Kapsel C ein:", function1: "Du kannst diese Raumaktion nur ausführen, falls sich das Zeitplättchen auf einem mit einem FVS-Plättchen markierten Feld befindet und das FVS-Kapsel-Feld „C“ frei ist.  Nach dem Einsteigen legst du alle Handkarten ab und passt automatisch. Platziere deinen Charakter auf dem entsprechenden FVS-Kapsel-Feld auf dem Spielplan. In der Ereignisphase hast du die Möglichkeit, mit dieser FVS-Kapsel zu entkommen. Charaktere, die sich auf einem FVS-Kapsel-Feld befinden, können nicht Ziel von Spieleffekten werden, sofern nicht anders angegeben. Falls du es nicht schaffst mit der FVS-Kapsel zu entkommen, erleidest du 1 Schwere Wunde."},
+  {category: "II", name: "Frachtversandsystem C", shortName: "FVS-C", unlocked: false, cost1: "2", functionHeader1: "Steige in FVS-Kapsel C ein:", function1: "Du kannst diese Raumaktion nur ausführen, falls sich das Zeitplättchen auf einem mit einem FVS-Plättchen markierten Feld befindet und das FVS-Kapsel-Feld „C“ frei ist.  Nach dem Einsteigen legst du alle Handkarten ab und passt automatisch. Platziere deinen Charakter auf dem entsprechenden FVS-Kapsel-Feld auf dem Spielplan. In der Ereignisphase hast du die Möglichkeit, mit dieser FVS-Kapsel zu entkommen. Charaktere, die sich auf einem FVS-Kapsel-Feld befinden, können nicht Ziel von Spieleffekten werden, sofern nicht anders angegeben. Falls du es nicht schaffst mit der FVS-Kapsel zu entkommen, erleidest du 1 Schwere Wunde."},
   
   {
     category: "II",
     name: "FVS-Kontrolle",
+    shortName: "FVS-Kontrolle",
     unlocked: false,
     cost1: "2",
 
@@ -136,6 +145,7 @@ const rooms = [
   {
     category: "II",
     name: "Kontaminierter Raum",
+    shortName: "Kontaminiert",
     unlocked: false,
     cost1: "-",
 
@@ -146,6 +156,7 @@ const rooms = [
   {
     category: "II",
     name: "Lüftungssteuerung",
+    shortName: "Lüftungss.",
     unlocked: false,
     cost1: "2",
 
@@ -157,6 +168,7 @@ const rooms = [
   {
     category: "II",
     name: "Testlabor",
+    shortName: "Testlabor",
     unlocked: false,
     cost1: "2",
 
@@ -168,6 +180,7 @@ const rooms = [
   {
     category: "II",
     name: "Wachraum",
+    shortName: "Wachraum",
     unlocked: false,
     cost1: "2",
 
@@ -243,7 +256,7 @@ function showRooms(category, hex){
        
        button.addEventListener("click",()=>{
          
-       const roomName = button.textContent;
+       const roomName = bag.shortName;
 
        // Altes Label entfernen
        const oldLabel = document.querySelector(
@@ -388,7 +401,7 @@ function checkLocked() {
     
 
     rooms.forEach(room => {
-      if (room.name === unlockedRoom) {
+      if (room.shortName === unlockedRoom) {
         room.unlocked = true;
       }
     });
@@ -408,6 +421,7 @@ function listUnlockedRooms(){
      if(currentRoom.unlocked==true&&currentRoom.name!="I"&&currentRoom.name!="II"){
        const button = document.createElement("button");
        button.classList.add("room-option");
+       button.classList.add("margin-right");
        button.textContent = currentRoom.name;
        
        if(currentRoom.category=="I"){
@@ -504,6 +518,8 @@ function resetGame() {
   localStorage.removeItem("roomsData");
   localStorage.removeItem("labelsData");
   location.reload();
+
+  
 }
 
 
