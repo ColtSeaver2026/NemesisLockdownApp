@@ -4,156 +4,79 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Missionsübersicht</title>
-
   <link rel="stylesheet" href="protocolstyle.css">
 </head>
 
 <body>
-  
+ <div class="layout">
   <div class="control-wrapper">
-  <button class="control-button" id="switchToMap">Wechsel zu Karte</button>
-  <button class="control-button" id="resetBtn">Zurücksetzen</button>
+    <button class="tile control-button" id="switchToMap">Karte</button>
+    <button class="tile control-button" id="resetBtn">Zurücksetzen</button>
+  </div>
+  
   </div>
 
   <div class="layout">
-
-    <!-- LINKE SEITE -->
+    
 
     <aside class="sidebar">
 
-      <h2 class="title">
-        Eindämmungsprotokolle
-      </h2>
+      <h2 class="title">Eindämmungsprotokolle</h2>
 
-      <button class="mission-tile signal-btn">
-        Tötet alle Charaktere, die nicht das Signal abgesetzt haben
-      </button>
+      <button class="tile mission-tile signal-btn">Tötet alle Charaktere, die nicht das Signal abgesetzt haben</button>
+      <button class="tile mission-tile signal-btn">Tötet alle Charaktere, die nicht das Signal abgesetzt haben</button>
 
-      <button class="mission-tile signal-btn">
-        Tötet alle Charaktere, die nicht das Signal abgesetzt haben
-      </button>
+      <button class="tile mission-tile knowledge-btn">Tötet alle Charaktere mit 4 oder weniger Wissen</button>
+      <button class="tile mission-tile knowledge-btn">Tötet alle Charaktere mit 4 oder weniger Wissen</button>
 
-      <button class="mission-tile knowledge-btn">
-        Tötet alle Charaktere mit 4 oder weniger Wissen
-      </button>
+      <button class="tile mission-tile kapsel-btn">Tötet alle Charaktere in FVS Kapseln</button>
 
-      <button class="mission-tile knowledge-btn">
-        Tötet alle Charaktere mit 4 oder weniger Wissen
-      </button>
+      <button class="tile mission-tile rescue-btn">Rettet alle Charaktere</button>
 
-      <button class="mission-tile kapsel-btn">
-        Tötet alle Charaktere in FVS Kapseln
-      </button>
+      <button class="tile mission-tile isolation-btn">Tötet alle Charaktere im Isolationsraum</button>
 
-      <button class="mission-tile rescue-btn">
-        Rettet alle Charaktere
-      </button>
+      <h2 class="title event-title">Ereignisse</h2>
 
-      <button class="mission-tile isolation-btn">
-        Tötet alle Charaktere im Isolationsraum
-      </button>
-
-      <!-- EREIGNISSE -->
-
-      <h2 class="title event-title">
-        Ereignisse
-      </h2>
-
-      <button class="mission-tile" id="xeno-event">
-        Erste Begegnung mit einem Xeno
-      </button>
-
-      <button class="mission-tile" id="death-event">
-        Tod des ersten Charakters
-      </button>
-
-      <button class="mission-tile" id="alarm-event">
-        Alarm ausgelöst
-      </button>
-
-      <button class="mission-tile" id="selfdestruct-event">
-        Selbstzerstörung aktiviert
-      </button>
-
-      <button class="mission-tile" id="contamination-event">
-        Kontaminationskarte im Deck
-      </button>
+      <button class="tile mission-tile" id="xeno-event">Erste Begegnung mit einem Xeno</button>
+      <button class="tile mission-tile" id="death-event">Tod des ersten Charakters</button>
+      <button class="tile mission-tile" id="alarm-event">Alarm ausgelöst</button>
+      <button class="tile mission-tile" id="selfdestruct-event">Selbstzerstörung aktiviert</button>
+      <button class="tile mission-tile" id="contamination-event">Kontaminationskarte im Deck</button>
 
     </aside>
 
-    <!-- RECHTE SEITE -->
-
     <main class="tasks-area">
 
-      <h2 class="title">
-        AUFGABEN
-      </h2>
+      <h2 class="title">Aufgaben</h2>
 
-      <div class="task-tile clickable" id="signal-task">
-        Setze das Signal ab
+      <div class="tile task-tile clickable" id="signal-task">Setze das Signal ab</div>
+      <div class="tile task-tile clickable" id="knowledge-task">Sammle 5 Wissen</div>
+
+      <div class="tile task-tile" id="kapsel-task">Meide die FVS Kapseln</div>
+      <div class="tile task-tile" id="isolation-task">Meide den Isolationsraum</div>
+
+      <div class="tile task-tile hidden" id="escape-task">Verlasse die Anlage (Selbstzerstörung aktiv!)</div>
+
+      <div class="tile task-tile hidden" id="contamination-task">
+        Du bist möglicherweise infiziert. Führe den Dekontaminationsprozess durch.
       </div>
 
-      <div class="task-tile clickable" id="knowledge-task">
-        Sammle 5 Wissen
-      </div>
+      <h2 class="title hint-title">HINWEISE</h2>
 
-      <div class="task-tile" id="kapsel-task">
-        Meide die FVS Kapseln
-      </div>
-
-      <div class="task-tile" id="isolation-task">
-        Meide den Isolationsraum
-      </div>
-
-      <div class="task-tile hidden" id="escape-task">
-        Verlasse die Anlage
-      </div>
-
-      <div class="task-tile hidden" id="contamination-task">
-        Du bist möglicherweise infiziert.
-        Führe den Dekontaminationsprozess durch.
-      </div>
-
-      <!-- HINWEISE -->
-
-      <h2 class="title hint-title">
-        HINWEISE
-      </h2>
-
-      <div class="hint-tile" id="bunker-hint">
-        Der Bunker ist sicher
-      </div>
-
-      <div class="hint-tile hidden" id="kapsel-hint">
-        FVS Kapseln sind sicher
-      </div>
-
-      <div class="hint-tile hidden" id="isolation-hint">
-        Der Isolationsraum ist sicher
-      </div>
+      <div class="tile hint-tile" id="bunker-hint">Der Bunker ist sicher</div>
+      <div class="tile hint-tile hidden" id="kapsel-hint">FVS Kapseln sind sicher</div>
+      <div class="tile hint-tile hidden" id="isolation-hint">Der Isolationsraum ist sicher</div>
 
     </main>
 
   </div>
 
-  <!-- MODAL -->
-
   <div class="modal hidden" id="event-modal">
-
     <div class="modal-box">
-
-      <h2 id="modal-title">
-        Ereignis
-      </h2>
-
+      <h2 id="modal-title">Ereignis</h2>
       <p id="modal-text"></p>
-
-      <button id="close-modal">
-        Verstanden
-      </button>
-
+      <button id="close-modal">Verstanden</button>
     </div>
-
   </div>
 
   <script src="protocolscript.js"></script>
