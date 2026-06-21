@@ -1,69 +1,63 @@
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  
+    
 }
 
-body{
-  background:#111827;
-  font-family:Arial, Helvetica, sans-serif;
-  min-height:100vh;
-  padding:40px;
-  color:white;
+body {
+  background-color: black;
+  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+  padding: 10px;
+  color: white;
 }
 
+/* Layout */
+.layout {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.sidebar, .tasks-area {
+  width: 360px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
 
 .control-wrapper{
   display: flex; 
-  justify-content: space-between;
-  
   margin-bottom: 20px; 
-
+  justify-content:center; 
+  gap: 100px; 
 }
 
-/* LAYOUT */
-
-.layout{
-  display:flex;
-  gap:50px;
-  align-items:flex-start;
+.title {
+  margin-bottom: 20px;
+  font-size: 18px; 
 }
 
-/* TITEL */
+/* 🔥 EINHEITLICHES TILE SYSTEM */
+.tile {
+  width: 100%;
+  padding: 20px;
+  text-align: left;
 
-.title{
-  margin-bottom:20px;
-  letter-spacing:2px;
-}
+  background: #1a1a1a;
+  color: white;
 
-/* SIDEBAR */
+  border: none;
+  border-left: 5px solid #ef4444;
 
-.sidebar{
-  width:360px;
+  font-size: 12px;
+  line-height: 1.4;
 
-  display:flex;
-  flex-direction:column;
-  gap:18px;
-}
-
-/* BUTTONS */
-
-.mission-tile, .control-button{
-  background:#1f2937;
-  color:white;
-
-  border:none;
-  border-left:5px solid #ef4444;
-
-  padding:20px;
-
-  text-align:left;
-  font-size:15px;
-  line-height:1.4;
-
-  cursor:pointer;
-
-  transition:0.2s;
+  cursor: pointer;
+  transition: 0.2s;
 
   clip-path: polygon(
     12px 0,
@@ -75,180 +69,75 @@ body{
   );
 }
 
-.mission-tile:hover, .control-button:hover{
-  background:#374151;
-
-  transform:
-    translateX(5px)
-    scale(1.02);
+/* Hover */
+.tile:hover {
+  background: #374151;
+  transform: translateX(5px) scale(1.02);
 }
 
-
-.control-button:focus,
-.control-button:active {
-  outline: none;
-  box-shadow: none;
+/* Mission active */
+.mission-tile.active {
+  background: #991b1b;
+  border-left-color: #f87171;
 }
 
-
-.control-button:focus-visible {
-  outline: none;
+/* Task completed */
+.task-tile.completed {
+  text-decoration: line-through;
+  opacity: 0.6;
+  border-left-color: #22c55e;
 }
 
-/* AKTIV */
-
-.mission-tile.active{
-  background:#991b1b;
-
-  border-left:5px solid #f87171;
-
-  box-shadow:0 0 15px rgba(248,113,113,0.5);
+/* Clickable tasks */
+.task-tile.clickable:hover {
+  background: #334155;
 }
 
-
-
-/* EVENTS */
-
-.event-title{
-  margin-top:40px;
+/* Hidden */
+.hidden {
+  display: none;
 }
 
-/* TASKS */
-
-.tasks-area{
-  width:520px;
-
-  display:flex;
-  flex-direction:column;
-  gap:18px;
+/* Modal */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: #1a1a1a;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
 }
 
-.task-tile,
-.hint-tile{
-  background:#1e293b;
-
-  padding:20px;
-
-  border-left:5px solid #3b82f6;
-
-  font-size:16px;
-
-  line-height:1.5;
-
-  clip-path: polygon(
-    12px 0,
-    100% 0,
-    100% calc(100% - 12px),
-    calc(100% - 12px) 100%,
-    0 100%,
-    0 12px
-  );
+.modal:not(.hidden) {
+  display: flex;
 }
 
-/* HINWEISE */
-
-.hint-title{
-  margin-top:30px;
+.modal-box {
+  width: 520px;
+  background: #1a1a1a;
+  border: 2px solid #374151;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.hint-tile{
-  border-left:5px solid #f59e0b;
+#close-modal {
+   font-size: clamp(10px, 3vw, 20px);
+  
+  padding: 0.8em 1.2em;
+  margin-bottom: 1rem;
+  
+
+  background: #1a1a1a;
+  border: 1px solid #444;
+  color: #ddd;
+
+  cursor: pointer;
+  transition: 0.2s;
 }
 
-/* VERSTECKT */
-
-.hidden{
-  display:none;
-}
-
-/* WARNUNG */
-
-.danger{
-  color:#f87171;
-  font-weight:bold;
-}
-
-/* ESCAPE WARNUNG */
-
-.escape-warning{
-  color:#f87171;
-  font-weight:bold;
-}
-
-/* ERLEDIGT */
-
-.task-tile.completed{
-  text-decoration:line-through;
-
-  opacity:0.6;
-
-  border-left:5px solid #22c55e;
-}
-
-/* KLICKBAR */
-
-.task-tile.clickable{
-  cursor:pointer;
-}
-
-.task-tile.clickable:hover{
-  background:#334155;
-}
-
-/* MODAL */
-
-.modal{
-  position:fixed;
-  inset:0;
-
-  background:rgba(0,0,0,0.8);
-
-  justify-content:center;
-  align-items:center;
-
-  z-index:999;
-}
-
-.modal:not(.hidden){
-  display:flex;
-}
-
-.modal-box{
-  width:520px;
-
-  background:#111827;
-
-  border:2px solid #374151;
-
-  border-left:6px solid #ef4444;
-
-  padding:30px;
-
-  display:flex;
-  flex-direction:column;
-  gap:20px;
-
-  clip-path: polygon(
-    12px 0,
-    100% 0,
-    100% calc(100% - 12px),
-    calc(100% - 12px) 100%,
-    0 100%,
-    0 12px
-  );
-}
-
-.modal-box button{
-  background:#991b1b;
-  color:white;
-
-  border:none;
-
-  padding:14px;
-
-  cursor:pointer;
-}
-
-.modal-box button:hover{
-  background:#b91c1c;
+#close-modal:hover {
+  background: #B33A3A;
+  color: black;
 }
