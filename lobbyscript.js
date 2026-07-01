@@ -88,7 +88,7 @@ createBtn.addEventListener("click", () => {
 
     modalCreate.classList.add("hidden");
   
-    window.location.href = `https://codepen.io/TimoCode/pen/pvRrrmr?room=${roomId}`;
+    window.location.href = `https://coltseaver2026.github.io/NemesisLockdownApp/protocol.html`;
 
 });
 
@@ -175,7 +175,7 @@ function renderRoom(roomId, roomData) {
 
 function joinRoom(roomId) {
 
-    window.location.href = `https://codepen.io/TimoCode/pen/pvRrrmr?room=${roomId}`;
+    window.location.href = `https://coltseaver2026.github.io/NemesisLockdownApp/protocol.html`;
 
 }
 
