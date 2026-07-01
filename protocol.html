@@ -18,58 +18,106 @@
 
   <div class="layout">
     
+     <aside class="event-sidebar" id="event-sidebar">
+
+      <h2 class="title event-title">Ereignisse</h2>
+
+      <button class="tile mission-tile event-tile" id="xeno-event">Erste Begegnung mit einem Xeno</button>
+      <button class="tile mission-tile event-tile" id="death-event">Tod des ersten Charakters</button>
+      <button class="tile mission-tile event-tile" id="alarm-event">Alarm ausgelöst</button>
+      <button class="tile mission-tile event-tile" id="selfdestruct-event">Selbstzerstörung aktiviert</button>
+      
+
+    </aside>
+    
 
     <aside class="sidebar">
 
       <h2 class="title">Eindämmungsprotokolle</h2>
-
-      <button class="tile mission-tile signal-btn">Tötet alle Charaktere, die nicht das Signal abgesetzt haben</button>
+      <div class="up-left mission-wrapper">
       <button class="tile mission-tile signal-btn">Tötet alle Charaktere, die nicht das Signal abgesetzt haben</button>
 
       <button class="tile mission-tile knowledge-btn">Tötet alle Charaktere mit 4 oder weniger Wissen</button>
+        
+        <button class="tile mission-tile kapsel-btn">Tötet alle Charaktere in FVS Kapseln</button>
+        
+      </div>
+      
+      <div class="up-right mission-wrapper">
+        
+        <button class="tile mission-tile signal-btn">Tötet alle Charaktere, die nicht das Signal abgesetzt haben</button>
+        
       <button class="tile mission-tile knowledge-btn">Tötet alle Charaktere mit 4 oder weniger Wissen</button>
-
-      <button class="tile mission-tile kapsel-btn">Tötet alle Charaktere in FVS Kapseln</button>
-
-      <button class="tile mission-tile rescue-btn">Rettet alle Charaktere</button>
-
+      
       <button class="tile mission-tile isolation-btn">Tötet alle Charaktere im Isolationsraum</button>
-
-      <h2 class="title event-title">Ereignisse</h2>
-
-      <button class="tile mission-tile" id="xeno-event">Erste Begegnung mit einem Xeno</button>
-      <button class="tile mission-tile" id="death-event">Tod des ersten Charakters</button>
-      <button class="tile mission-tile" id="alarm-event">Alarm ausgelöst</button>
-      <button class="tile mission-tile" id="selfdestruct-event">Selbstzerstörung aktiviert</button>
-      <button class="tile mission-tile" id="contamination-event">Kontaminationskarte im Deck</button>
-
+        
+        
+      </div>
+      
+      
+      <div class="low-left mission-wrapper">
+      <button class="tile mission-tile rescue-btn">Rettet alle Charaktere</button>
+        </div>
+      
+     <div class="down-right contamination-wrapper">
+      <button class="tile mission-tile" id="contamination-event"><div class="special-title">Kontaminationskarte im Deck?</div>Ja</button>
+      </div>
+      
+      
     </aside>
+      
+
+
+     
 
     <main class="tasks-area">
 
       <h2 class="title">Aufgaben</h2>
+      
+      <div class="left task-wrapper">
 
       <div class="tile task-tile clickable" id="signal-task">Setze das Signal ab</div>
-      <div class="tile task-tile clickable" id="knowledge-task">Sammle 5 Wissen</div>
-
-      <div class="tile task-tile" id="kapsel-task">Meide die FVS Kapseln</div>
-      <div class="tile task-tile" id="isolation-task">Meide den Isolationsraum</div>
-
-      <div class="tile task-tile hidden" id="escape-task">Verlasse die Anlage (Selbstzerstörung aktiv!)</div>
-
-      <div class="tile task-tile hidden" id="contamination-task">
+      <div class="tile task-tile nohover" id="kapsel-task">Meide die FVS Kapseln</div>
+        
+         <div class="tile task-tile hidden nohover" id="contamination-task">
         Du bist möglicherweise infiziert. Führe den Dekontaminationsprozess durch.
       </div>
+        
+      </div>
+      
+      <div class="right task-wrapper">
+        
+        <div class="tile task-tile clickable" id="knowledge-task">Sammle 5 Wissen</div>
 
+
+      <div class="tile task-tile nohover" id="isolation-task">Meide den Isolationsraum</div>
+        
+        <div class="tile task-tile hidden nohover" id="escape-task">Verlasse die Anlage (Selbstzerstörung aktiv!)</div>
+        
+        
+        
+      </div>
+      
+      </main>
+
+     
+
+      
+     <aside class="sidebar">
       <h2 class="title hint-title">HINWEISE</h2>
+      
+    <div class="left hint-wrapper">
+      <div class="tile hint-tile nohover" id="bunker-hint">Der Bunker ist sicher</div>
+        
+      </div>
+      
+        <div class="right hint-wrapper">
+      <div class="tile hint-tile hidden nohover" id="kapsel-hint">FVS Kapseln sind sicher</div>
+      <div class="tile hint-tile hidden nohover" id="isolation-hint">Der Isolationsraum ist sicher</div>
+    </div>
+        </aside>
 
-      <div class="tile hint-tile" id="bunker-hint">Der Bunker ist sicher</div>
-      <div class="tile hint-tile hidden" id="kapsel-hint">FVS Kapseln sind sicher</div>
-      <div class="tile hint-tile hidden" id="isolation-hint">Der Isolationsraum ist sicher</div>
-
-    </main>
-
-  </div>
+  
 
   <div class="modal hidden" id="event-modal">
     <div class="modal-box">
@@ -78,7 +126,12 @@
       <button id="close-modal">Verstanden</button>
     </div>
   </div>
+    
+    
+    <div id="room-info">TEst</div>
 
+  <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-database-compat.js"></script>
   <script src="protocolscript.js"></script>
 
 </body>
