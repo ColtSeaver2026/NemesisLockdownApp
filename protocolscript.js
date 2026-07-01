@@ -1,3 +1,25 @@
+const firebaseConfig = {
+  apiKey: "AIzaSyCgAbaZ3bmmQG_bAAbnq6_Q6E7yW4_xv_A",
+    authDomain: "nemesis-ld.firebaseapp.com",
+    projectId: "nemesis-ld",
+    storageBucket: "nemesis-ld.firebasestorage.app",
+    messagingSenderId: "580839432274",
+    appId: "1:580839432274:web:edc1bbdfd724721018ff8b",
+    measurementId: "G-WHHS9TP2FW",
+
+    databaseURL: "https://nemesis-ld-default-rtdb.europe-west1.firebasedatabase.app"
+
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+
+const params = new URLSearchParams(window.location.search);
+
+const roomId = params.get("room");
+
+
 const switchToMap = document.getElementById("switchToMap");
 
 switchToMap.addEventListener("click", () => {
@@ -15,9 +37,14 @@ resetBtn.addEventListener("click", () => {
 
   document.querySelectorAll(".task-tile.completed")
     .forEach(el => el.classList.remove("completed"));
+  
+  db.ref(`rooms/${roomId}`).remove();
 
   location.reload();
 });
+
+
+const eventSidebar = document.getElementById("event-sidebar");
 
 /* TASKS */
 const signalTask = document.getElementById("signal-task");
@@ -47,6 +74,36 @@ const modalTitle = document.getElementById("modal-title");
 const modalText = document.getElementById("modal-text");
 const closeModal = document.getElementById("close-modal");
 
+
+/* room-info */
+const roomInfo = document.getElementById("room-info");
+
+
+
+/* -------------------- */
+/* Initialisierung */
+/* -------------------- */
+
+init(); 
+
+
+function init() { 
+  
+  const roomId = localStorage.getItem("NemesisRoomId");
+  
+  const role = localStorage.getItem(`${roomId}-NemesisRole`);
+  
+  if(role!=="host"){
+    eventSidebar.classList.add("hidden");
+    
+  }
+  
+  roomInfo.innerText=`${roomId}`
+
+}
+
+
+
 /* -------------------- */
 /* BUTTON TOGGLE SYSTEM */
 /* -------------------- */
@@ -64,6 +121,8 @@ document.querySelectorAll(".mission-tile").forEach(button => {
     saveGame();
   });
 });
+
+
 
 /* -------------------- */
 /* TASK CLICKABLES */
@@ -125,18 +184,35 @@ function checkIsolation() {
   const isolationButton = document.querySelector(".isolation-btn");
 
    if(isolationButton.classList.contains("active")){
-
-    isolationTask.style.display = "none";
+     
+     isolationTask.classList.add("hidden");
+     isolationHint.classList.remove("hidden");
+     
+     
+     if(selfdestructEvent.classList.contains("active")){
+       
+     isolationTask.classList.add("hidden");
+     isolationHint.classList.add("hidden");
     
-    if(!selfdestructEvent.classList.contains("active")){
-    isolationHint.classList.remove("hidden");
     }
 
-  }else{
+ 
+    
+    }
 
-    isolationTask.style.display = "block";
+  else{
+
+    isolationTask.classList.remove("hidden");;
 
     isolationHint.classList.add("hidden");
+    
+    
+    if(selfdestructEvent.classList.contains("active")){
+       
+     isolationTask.classList.add("hidden");
+     isolationHint.classList.add("hidden");
+    
+    }
 
   }
 }
@@ -178,39 +254,60 @@ closeModal.addEventListener("click", () => {
 /* EVENTS */
 /* -------------------- */
 
+
+
+
 xenoEvent.addEventListener("click", () => {
+  
+  
   if (xenoEvent.classList.contains("active")) {
-    openModal("Erste Begegnung", "Entscheide dich für eines deiner beiden Ziele.");
+    
+    db.ref(`rooms/${roomId}/xenoEvent`).set(true);
   }
+  else{
+    db.ref(`rooms/${roomId}/xenoEvent`).set(false);
+  }
+
 });
 
 deathEvent.addEventListener("click", () => {
   if (deathEvent.classList.contains("active")) {
-    openModal("Tod des ersten Charakters", "Entscheide dich für eines deiner beiden Ziele. Das Haupttor zum Bunker wurde geöffnet.");
+
+    db.ref(`rooms/${roomId}/deathEvent`).set(true);
+
+  }
+  
+  else{
+        db.ref(`rooms/${roomId}/deathEvent`).set(false);       
+
   }
 });
 
 alarmEvent.addEventListener("click", () => {
   if (alarmEvent.classList.contains("active")) {
-    openModal("Alarm ausgelöst", "Isolationsraum kann genutzt werden.");
+       
+    db.ref(`rooms/${roomId}/alarmEvent`).set(true);
+
+  }
+  
+  else{
+        db.ref(`rooms/${roomId}/alarmEvent`).set(false);
+
   }
 });
 
 selfdestructEvent.addEventListener("click", () => {
   if (selfdestructEvent.classList.contains("active")) {
-    openModal("Selbstzerstörung aktiviert", "Das Haupttor zum Bunker öffnet sich, sobald das Zeitplättchen vorrückt und dadurch die gelbe Seite des Selbstzerstörungsplättchens sichtbar wird.");
+   
+        db.ref(`rooms/${roomId}/selfdestructEvent`).set(true);
 
-    isolationTask.classList.add("hidden");
-    isolationHint.classList.add("hidden");
-    escapeTask.classList.remove("hidden");
   } else {
-    escapeTask.classList.add("hidden");
+    
+    db.ref(`rooms/${roomId}/selfdestructEvent`).set(false);
 
-    if (!document.querySelector(".isolation-btn").classList.contains("active")) {
-      isolationTask.classList.remove("hidden");
-    }
   }
 });
+
 
 contaminationEvent.addEventListener("click", () => {
   if (contaminationEvent.classList.contains("active")) {
@@ -219,6 +316,111 @@ contaminationEvent.addEventListener("click", () => {
     contaminationTask.classList.add("hidden");
   }
 });
+
+
+/* -------------------- */
+/* Firebase Listener in Javascript */
+/* -------------------- */
+
+
+
+
+db.ref(`rooms/${roomId}/xenoEvent`).on("value", (snapshot) => {
+  
+  const data = snapshot.val();
+  
+  if (data === null) return;
+  
+  
+  if (data) {
+    openModal("Erste Begegnung", "Entscheide dich für eines deiner beiden Ziele.");
+    xenoEvent.classList.add("active")
+  }
+  
+  if (!data) {
+    xenoEvent.classList.remove("active")
+  }
+  
+  
+  
+                                    }
+            )
+
+
+
+db.ref(`rooms/${roomId}/deathEvent`).on("value", (snapshot) => {
+  
+  const data = snapshot.val();
+  
+  if (data === null) return;
+  
+  if (data) {
+    openModal("Tod des ersten Charakters", "Entscheide dich für eines deiner beiden Ziele. Das Haupttor zum Bunker wurde geöffnet.");             deathEvent.classList.add("active")
+  }
+  
+  if (!data) {
+    deathEvent.classList.remove("active")
+  }
+  
+  
+  
+                                    }
+            )
+
+
+db.ref(`rooms/${roomId}/alarmEvent`).on("value", (snapshot) => {
+  
+  const data = snapshot.val();
+  
+  if (data === null) return;
+  
+   if (data) {
+        openModal("Alarm ausgelöst", "Isolationsraum kann genutzt werden.");  
+        
+        alarmEvent.classList.add("active")
+  }
+  
+  if (!data) {
+    alarmEvent.classList.remove("active")
+  }
+  
+  
+  
+                                    }
+            )
+
+
+db.ref(`rooms/${roomId}/selfdestructEvent`).on("value", (snapshot) => {
+  
+  const data = snapshot.val();
+  
+  if (data === null) return;
+
+  if (data) {
+    openModal("Selbstzerstörung aktiviert", "Das Haupttor zum Bunker öffnet sich, sobald das Zeitplättchen vorrückt und dadurch die gelbe Seite des Selbstzerstörungsplättchens sichtbar wird.");
+
+    isolationTask.classList.add("hidden");
+    isolationHint.classList.add("hidden");
+    escapeTask.classList.remove("hidden");
+    selfdestructEvent.classList.add("active");
+  }
+  
+  if (!data) {
+    
+    escapeTask.classList.add("hidden");
+    selfdestructEvent.classList.remove("active");
+ 
+    
+    if(document.querySelector(".isolation-btn").classList.contains("active")){
+      isolationHint.classList.remove("hidden");
+    }
+
+  }
+  
+}
+                               )
+
+  
 
 /* -------------------- */
 /* SAVE / LOAD */
@@ -267,4 +469,10 @@ function loadGame() {
   checkRescue();
 }
 
+
+
+
 loadGame();
+
+
+                  
