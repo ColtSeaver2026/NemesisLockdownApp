@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spielräume</title>
+
+    <link rel="stylesheet" href="lobbies.css">
+</head>
+<body>
+
+<header>
+    <h1>Eindämmungsprotokolle</h1>
+
+    <div class="header-buttons">
+        <button id="create-room-btn">+ Spielraum erstellen</button>
+        <button id="join-room-btn">Mit Code beitreten</button>
+    </div>
+</header>
+
+<main>
+
+    <div id="room-list">
+      
+      
+    </div>
+
+</main>
+  
+  <div class="modal hidden" id="modal-create">
+    <input
+    type="text"
+    id="room-name"
+    placeholder="Spielraumname eingeben">
+    <input
+    type="text"
+    id="roomPassword"
+    placeholder="Passwort eingeben">
+    <button id="create-btn">Erstellen</button>
+    <button id="cancel-btn">Abbrechen</button>
+    
+  </div>
+  
+  
+  
+  <div class="modal hidden" id="ask-password">
+    <input
+    type="text"
+    id="enter-password"
+    placeholder="Passwort eingeben">
+    <button id="enter-btn">Betreten</button>
+    <button id="cancel-password-btn">Abbrechen</button>
+    
+  </div>
+
+  
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+<script src="lobbiesscript.js"></script>
+</body>
+</html>
