@@ -28,8 +28,9 @@ let currentRoomId=""
 const createRoomBtn = document.getElementById("create-room-btn");
 const createBtn = document.getElementById("create-btn");
 const cancelBtn = document.getElementById("cancel-btn");
-const enterBtn = document.getElementById("enter-btn")
-const cancelPasswordBtn = document.getElementById("cancel-password-btn")
+const enterBtn = document.getElementById("enter-btn");
+const cancelPasswordBtn = document.getElementById("cancel-password-btn");
+const alertCancelBtn = document.getElementById("alert-cancel-btn");
 
 
 /* -------------------- */
@@ -40,6 +41,9 @@ const roomName = document.getElementById("room-name");
 
 const modalCreate = document.getElementById("modal-create");
 const modalPassword = document.getElementById("ask-password")
+
+const alertModal = document.getElementById("alert-modal")
+const alertText = document.getElementById("alert-text")
 
 
 
@@ -59,12 +63,14 @@ createBtn.addEventListener("click", () => {
     const password = roomPassword.value.trim(); 
 
     if (name.length === 0) {
-        console.log("BITTE EINGABE VORNEHMEN.");
+        alertModal.classList.remove("hidden")
+        alertText.innerText="Bitte Raumnamen eingeben."
         return;
     }
   
     if(password.length === 0){
-      console.log("BITTE PASSWORT EINGEBEN")
+      alertModal.classList.remove("hidden")
+      alertText.innerText="Bitte Passwort eingeben."
       return
     }
 
@@ -83,8 +89,6 @@ createBtn.addEventListener("click", () => {
   
     localStorage.setItem("NemesisRoomId", roomId);
     localStorage.setItem(`${roomId}-NemesisRole`, "host");
-
-    console.log("Raum erstellt:", roomId);
 
     modalCreate.classList.add("hidden");
   
@@ -158,7 +162,9 @@ function renderRoom(roomId, roomData) {
           }
         
         else{
-          console.log("FALSCHES PASSWORT")
+          alertModal.classList.remove("hidden")
+          alertText.innerText ="Passwort falsch"
+          
         }
 
         
@@ -178,6 +184,12 @@ function joinRoom(roomId) {
     window.location.href = `https://coltseaver2026.github.io/NemesisLockdownApp/protocol.html`;
 
 }
+
+
+alertCancelBtn.addEventListener("click", ()=>{
+     alertModal.classList.add("hidden")
+
+})
 
 
 
