@@ -15,10 +15,6 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
 
-const params = new URLSearchParams(window.location.search);
-
-const roomId = params.get("room");
-
 
 const switchToMap = document.getElementById("switchToMap");
 
@@ -29,7 +25,8 @@ switchToMap.addEventListener("click", () => {
 const resetBtn = document.getElementById("resetBtn");
 
 resetBtn.addEventListener("click", () => {
-  localStorage.removeItem("protocolData");
+  
+  localStorage.removeItem(`NemesisGameRoom-${roomId}`)
 
   // optional: sofort visuell resetten (ohne reload wäre noch sauberer)
   document.querySelectorAll(".mission-tile.active")
@@ -37,8 +34,11 @@ resetBtn.addEventListener("click", () => {
 
   document.querySelectorAll(".task-tile.completed")
     .forEach(el => el.classList.remove("completed"));
-  
-  db.ref(`rooms/${roomId}`).remove();
+    
+  db.ref(`rooms/${roomId}/xenoEvent`).set(false);
+  db.ref(`rooms/${roomId}/deathEvent`).set(false);
+  db.ref(`rooms/${roomId}/alarmEvent`).set(false);
+  db.ref(`rooms/${roomId}/selfdestructEvent`).set(false);
 
   location.reload();
 });
@@ -84,21 +84,35 @@ const roomInfo = document.getElementById("room-info");
 /* Initialisierung */
 /* -------------------- */
 
+const roomId = localStorage.getItem("NemesisRoomId");
+const role = localStorage.getItem(`${roomId}-NemesisRole`);
+
+
 init(); 
 
 
 function init() { 
-  
-  const roomId = localStorage.getItem("NemesisRoomId");
-  
-  const role = localStorage.getItem(`${roomId}-NemesisRole`);
-  
+      
   if(role!=="host"){
     eventSidebar.classList.add("hidden");
     
   }
   
-  roomInfo.innerText=`${roomId}`
+  
+  db.ref(`rooms/${roomId}`).once("value").then((snapshot) => {
+
+    if (snapshot.exists()) {
+         roomInfo.innerText=`${roomId}`
+    } else {
+         roomInfo.innerText=`${roomId} (nicht mehr vorhanden)`
+    }
+    
+    
+    
+    initFirebase(roomId);
+    loadRoom(roomId)
+});
+ 
 
 }
 
@@ -441,15 +455,17 @@ function saveGame() {
     activeButtons,
     completedTasks
   };
+  
 
-  localStorage.setItem("protocolData", JSON.stringify(gameData));
+  localStorage.setItem(`NemesisGameRoom-${roomId}`, JSON.stringify(gameData));
 }
 
-function loadGame() {
-  const saved = localStorage.getItem("protocolData");
-  if (!saved) return;
 
-  const data = JSON.parse(saved);
+function loadGame(roomId) {
+  const savedRoom = localStorage.getItem(`NemesisGameRoom-${roomId}`);
+  if (!savedRoom) return;
+
+  const data = JSON.parse(savedRoom);
 
   document.querySelectorAll(".mission-tile").forEach(btn => {
     if (data.activeButtons.includes(btn.textContent.trim())) {
@@ -467,12 +483,68 @@ function loadGame() {
   checkKapsel();
   checkIsolation();
   checkRescue();
+};
+
+
+
+function initFirebase(roomId){
+  
+  
+  db.ref(`rooms/${roomId}`).once("value", (snapshot) => {
+  
+  const data = snapshot.val();
+  
+  if (data === null) return;
+    
+  if(data.xenoEvent===true){
+    
+   xenoEvent.classList.add("active");
+    
+  }
+    
+    else{
+   xenoEvent.classList.remove("active");
+
+    }
+    
+    
+   if(data.deathEvent===true){
+      deathEvent.classList.add("active");
+   }
+    
+    else{
+       deathEvent.classList.remove("active");
+    }
+    
+    
+     if(data.alarmEvent===true){
+      alarmEvent.classList.add("active");
+   }
+    
+    else{
+       alarmEvent.classList.remove("active");
+    }
+    
+    
+    if(data.selfdestructEvent===true){
+      selfdestructEvent.classList.add("active");
+   }
+    
+    else{
+       selfdestructEvent.classList.remove("active");
+    }
+
+  
+  
+                                    }
+            )
+  
+  
 }
 
 
 
 
-loadGame();
 
 
                   
