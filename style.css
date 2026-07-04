@@ -1,3 +1,7 @@
+*{
+  border: 1px solid red; 
+}
+
 /* Hintergrund */
 body {
   margin: 0;
@@ -17,7 +21,7 @@ body {
 
 /* Titel */
 .title {
-  font-size: 42px;
+  font-size: 48px;
   letter-spacing: 2px;
   margin-bottom: 40px;
   color: #F5F1E8;
@@ -35,16 +39,15 @@ body {
 
 /* Buttons */
 .menu-btn {
-  width: 260px;
+  width: 350px;
   padding: 15px 20px;
-  font-size: 18px;
+  font-size: 15px;
   cursor: pointer;
 
-  background: rgba(20, 25, 35, 0.9);
+  background: #1a1a1a;
   color: #F5F1E8;
 
-  border: 2px solid #1E2833;
-  border-radius: 10px;
+  border: 2px solid #374151; 
 
   transition: 0.2s ease;
   letter-spacing: 1px;
