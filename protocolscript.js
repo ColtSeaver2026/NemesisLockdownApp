@@ -34,11 +34,14 @@ resetBtn.addEventListener("click", () => {
 
   document.querySelectorAll(".task-tile.completed")
     .forEach(el => el.classList.remove("completed"));
-    
+  
+  
+  if(role==="host"){
   db.ref(`rooms/${roomId}/xenoEvent`).set(false);
   db.ref(`rooms/${roomId}/deathEvent`).set(false);
   db.ref(`rooms/${roomId}/alarmEvent`).set(false);
   db.ref(`rooms/${roomId}/selfdestructEvent`).set(false);
+  }
 
   location.reload();
 });
@@ -110,7 +113,7 @@ function init() {
     
     
     initFirebase(roomId);
-    loadRoom(roomId)
+    loadGame(roomId)
 });
  
 
