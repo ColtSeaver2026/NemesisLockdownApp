@@ -416,26 +416,18 @@ db.ref(`rooms/${roomId}/selfdestructEvent`).on("value", (snapshot) => {
   if (data) {
     openModal("Selbstzerstörung aktiviert", "Das Haupttor zum Bunker öffnet sich, sobald das Zeitplättchen vorrückt und dadurch die gelbe Seite des Selbstzerstörungsplättchens sichtbar wird.");
 
-    isolationTask.classList.add("hidden");
-    isolationHint.classList.add("hidden");
-    escapeTask.classList.remove("hidden");
+ 
     selfdestructEvent.classList.add("active");
+    
+    checkIsolation();
   }
   
   if (!data) {
     
-    escapeTask.classList.add("hidden");
+   
     selfdestructEvent.classList.remove("active");
  
-    
-    if(document.querySelector(".isolation-btn").classList.contains("active")){
-      isolationHint.classList.remove("hidden");
-    }
-    
-    if(!document.querySelector(".isolation-btn").classList.contains("active")){
-          isolationTask.classList.remove("hidden");
-
-    }
+    checkIsolation(); 
 
   }
   
