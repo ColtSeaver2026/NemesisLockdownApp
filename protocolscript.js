@@ -253,6 +253,19 @@ function checkRescue() {
   }
 }
 
+function checkEscape(){
+  
+  if(selfdestructEvent.classList.contains("active")){
+  escapeTask.classList.remove("hidden")
+  }
+  
+  else{
+      escapeTask.classList.add("hidden")
+  }
+  
+  
+}
+
 /* -------------------- */
 /* MODAL */
 /* -------------------- */
@@ -420,6 +433,7 @@ db.ref(`rooms/${roomId}/selfdestructEvent`).on("value", (snapshot) => {
     selfdestructEvent.classList.add("active");
     
     checkIsolation();
+    checkEscape();
   }
   
   if (!data) {
@@ -428,6 +442,7 @@ db.ref(`rooms/${roomId}/selfdestructEvent`).on("value", (snapshot) => {
     selfdestructEvent.classList.remove("active");
  
     checkIsolation(); 
+    checkEscape();
 
   }
   
