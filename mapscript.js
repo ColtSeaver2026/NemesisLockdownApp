@@ -1,5 +1,8 @@
 const switchToProtocolBtn = document.getElementById("switchToProtocol")
 
+const sessionInfoNumber = localStorage.getItem("NemesisRoomId");
+const sessionInfo = document.getElementById("sessionInfo")
+
 const modal = document.getElementById("roomModal");
 const cancelBtn = document.getElementById("cancelRoom");
 
@@ -188,6 +191,12 @@ const rooms = [
     function1: "Reduziere den Suchzähler um 1 und nimm dir den hergestellten Gegenstand 'Taser' oder 'Schutzanzug'."
 }
 ]
+
+
+/* -------------------------------- */
+/* Angabe in welcher Session man sich befindet, wird an HTML übergeben.*/
+/* -------------------------------- */
+sessionInfo.innerText = sessionInfoNumber;
 
 
 /* -------------------------------- */
@@ -422,6 +431,7 @@ function listUnlockedRooms(){
        const button = document.createElement("button");
        button.classList.add("room-option");
        button.classList.add("margin-right");
+       button.classList.add("margin-bottom");
        button.textContent = currentRoom.name;
        
        if(currentRoom.category=="I"){
@@ -478,13 +488,13 @@ function saveGame() {
     });
   });
 
-  localStorage.setItem("roomsData", JSON.stringify(rooms));
-  localStorage.setItem("labelsData", JSON.stringify(labels));
+  localStorage.setItem(`roomsData-${sessionInfoNumber}`, JSON.stringify(rooms));
+  localStorage.setItem(`labelsData-${sessionInfoNumber}`, JSON.stringify(labels));
 }
 
 function loadGame() {
-  const savedRooms = JSON.parse(localStorage.getItem("roomsData"));
-  const savedLabels = JSON.parse(localStorage.getItem("labelsData"));
+  const savedRooms = JSON.parse(localStorage.getItem(`roomsData-${sessionInfoNumber}`));
+  const savedLabels = JSON.parse(localStorage.getItem(`labelsData-${sessionInfoNumber}`));
 
   if (!savedRooms || !savedLabels) return;
 
@@ -515,8 +525,8 @@ function loadGame() {
 
 
 function resetGame() {
-  localStorage.removeItem("roomsData");
-  localStorage.removeItem("labelsData");
+  localStorage.removeItem(`roomsData-${sessionInfoNumber}`);
+  localStorage.removeItem(`labelsData-${sessionInfoNumber}`);
   location.reload();
 
   
