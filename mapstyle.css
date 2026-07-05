@@ -1,6 +1,7 @@
 
 *{
 
+
 }
 
 body {
@@ -20,8 +21,14 @@ h3{
 
 .map {
   position: relative;
-  width: 100%;
+  width: 98%;
   max-width: 900px;
+  
+  margin: 0 auto; 
+  
+  
+  
+  border: 2px solid #374151; 
   
 }
 
@@ -46,8 +53,6 @@ h3{
 
   cursor: pointer;
   transition: 0.2s;
-
-
 }
 
 .hex:hover {
@@ -117,14 +122,6 @@ h3{
   gap: 15px;
 }
 
-.modal-buttons {
-  display: flex;
-  gap: 10px;
-}
-
-.modal-buttons button {
-  flex: 1;
-}
 
 .room-list {
   display: flex;
@@ -137,33 +134,26 @@ h3{
 }
 
 
-.room-option, .control {
+.room-option, .control{
   padding: 12px;
   font-size: 12px;
   text-align: center; 
   
-  width: 155px;    
- 
-    
+  width: 155px; 
+  
   background: #1a1a1a;
-  color: white;
+  color: #F5F1E8;
 
-  border: none;
-  border-left: 5px solid  #B33A3A;
+  border: 2px solid #374151; 
+
 
   font-size: 12px;
   line-height: 1.4;
 
   cursor: pointer;
-  transition: 0.2s;
+  transition: 0.2s ease;
 
-  clip-path: polygon(
-    12px 0,
-    100% 0,
-    100% calc(100% - 12px),
-    calc(100% - 12px) 100%,
-    0 100%,
-    0 12px
+  
   );
 }
 
@@ -172,8 +162,11 @@ h3{
 }
 
 .room-option:hover, .control:hover{
-  background: #666;
-  transform: translateX(5px) scale(1.02);
+  transform: scale(1.05);
+  border-color: #A8D8FF;
+  box-shadow:
+    0 0 10px rgba(168, 216, 255, 0.3),
+    0 0 20px rgba(179, 58, 58, 0.2);
   
 }
 
@@ -182,18 +175,28 @@ h3{
 }
 
 .margin-right{
-    margin: 0 15px 0 0; 
+    margin: 0 15px 5px 0; 
 
 }
 
+
+
 .button-wrapper{
   display: flex; 
-  justify-content: space-between;
+  justify-content: center;
 
-  width: 100%;
+  width: 98%;
   max-width: 900px;
   
+  margin: 0 auto; 
   
+  
+}
+
+.unlocked-rooms-wrapper{
+  width: 98%;
+  max-width: 900px;
+  margin: 0 auto; 
 }
 
 .unlocked {
@@ -207,26 +210,39 @@ h3{
   margin-top: 10px;
   padding: 10px;
 
-  background: transparent;
-  color: #ccc;
+   background: #1a1a1a;
+  color: #F5F1E8;
 
-  border: none;
+  border: 2px solid #374151; 
 
-  font-size: 15px;
+
+  font-size: 12px;
+  line-height: 1.4;
+
   cursor: pointer;
-
-  transition: 0.2s;
+  transition: 0.2s ease;
 }
 
 #cancelRoom:hover, #cancelRoomInfo:hover {
-  color: white;
-  text-decoration: underline;
+  transform: scale(1.05);
+  border-color: #A8D8FF;
+  box-shadow:
+    0 0 10px rgba(168, 216, 255, 0.3),
+    0 0 20px rgba(179, 58, 58, 0.2);
 }
 
 .roomFunctionWrapper{
   display: flex; 
   align-items: center;
   font-size: 20px; 
+  
+  background: #1a1a1a;
+  
+  padding: 5px; 
+  margin-bottom: 10px; 
+  
+  border: 2px solid #374151; 
+
   
 }
 
@@ -237,6 +253,9 @@ h3{
   align-items: center;      /* vertikal zentriert */
   justify-content: center;  /* horizontal zentriert */
   font-size: 40px; 
+  
+  border-right: 2px solid #374151; 
+
 
  
 
@@ -245,5 +264,11 @@ h3{
 .roomFunctionHeader {
   flex: 1;              /* nimmt restlichen Platz */
   text-align: center;   /* zentriert den Text */
+  
 }
 
+#sessionInfo{
+  color: white; 
+  margin-top: 10px; 
+  text-align: center; 
+}
