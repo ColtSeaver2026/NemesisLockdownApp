@@ -432,7 +432,7 @@ db.ref(`rooms/${roomId}/selfdestructEvent`).on("value", (snapshot) => {
       isolationHint.classList.remove("hidden");
     }
     
-    else{
+    if(!document.querySelector(".isolation-btn").classList.contains("active")){
           isolationTask.classList.remove("hidden");
 
     }
