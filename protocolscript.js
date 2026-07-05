@@ -431,6 +431,11 @@ db.ref(`rooms/${roomId}/selfdestructEvent`).on("value", (snapshot) => {
     if(document.querySelector(".isolation-btn").classList.contains("active")){
       isolationHint.classList.remove("hidden");
     }
+    
+    else{
+          isolationTask.classList.remove("hidden");
+
+    }
 
   }
   
@@ -447,6 +452,7 @@ function saveGame() {
   const activeButtons = [];
   document.querySelectorAll(".mission-tile.active").forEach(btn => {
     activeButtons.push(btn.id);
+    
   });
 
   const completedTasks = [];
