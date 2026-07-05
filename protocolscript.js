@@ -446,7 +446,7 @@ db.ref(`rooms/${roomId}/selfdestructEvent`).on("value", (snapshot) => {
 function saveGame() {
   const activeButtons = [];
   document.querySelectorAll(".mission-tile.active").forEach(btn => {
-    activeButtons.push(btn.textContent.trim());
+    activeButtons.push(btn.id);
   });
 
   const completedTasks = [];
@@ -471,7 +471,7 @@ function loadGame(roomId) {
   const data = JSON.parse(savedRoom);
 
   document.querySelectorAll(".mission-tile").forEach(btn => {
-    if (data.activeButtons.includes(btn.textContent.trim())) {
+    if (data.activeButtons.includes(btn.id)) {
       btn.classList.add("active");
     }
   });
