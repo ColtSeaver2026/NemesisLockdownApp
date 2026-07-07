@@ -25,6 +25,10 @@ let currentRoomId=""
 /* Button */
 /* -------------------- */
 
+const navHome = document.getElementById("nav-home");
+const navMap = document.getElementById("nav-map");
+const navProtocol = document.getElementById("nav-protocol");
+
 const createRoomBtn = document.getElementById("create-room-btn");
 const createBtn = document.getElementById("create-btn");
 const cancelBtn = document.getElementById("cancel-btn");
@@ -117,12 +121,14 @@ function renderRoom(roomId, roomData) {
     const container = document.getElementById("room-list");
 
     const roomEl = document.createElement("div");
-    roomEl.classList.add("room");
+    roomEl.classList.add("room-card");
 
-    const title = document.createElement("h3");
+    const title = document.createElement("h2");
+    title.classList.add("room-name");
     title.textContent = roomData.name || "Unbenannte Lobby";
 
-    const idText = document.createElement("p");
+    const idText = document.createElement("div");
+    idText.classList.add("room-id");
     idText.textContent = `ID: ${roomId}`;
 
     const joinBtn = document.createElement("button");
@@ -213,6 +219,31 @@ db.ref("rooms").on("value", (snapshot) => {
         renderRoom(roomId, roomData);
     });
 });
+
+
+const navigatorMenu = document.querySelector(".navigator");
+
+navigatorMenu.querySelector(".nav-main").addEventListener("click", () => {
+
+    navigatorMenu.classList.toggle("open");
+
+});
+
+
+navHome.addEventListener("click", ()=>{
+      window.location.href = "https://coltseaver2026.github.io/NemesisLockdownApp/";
+
+})
+                         
+ navMap.addEventListener("click", ()=>{
+      window.location.href = "https://coltseaver2026.github.io/NemesisLockdownApp/map.html";
+
+})
+
+navProtocol.addEventListener("click", ()=>{
+      window.location.href = "https://coltseaver2026.github.io/NemesisLockdownApp/protocol.html";
+
+})
 
 
 
