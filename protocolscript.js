@@ -25,25 +25,7 @@ switchToMap.addEventListener("click", () => {
 const resetBtn = document.getElementById("resetBtn");
 
 resetBtn.addEventListener("click", () => {
-  
-  localStorage.removeItem(`NemesisGameRoom-${roomId}`)
-
-  // optional: sofort visuell resetten (ohne reload wäre noch sauberer)
-  document.querySelectorAll(".mission-tile.active")
-    .forEach(el => el.classList.remove("active"));
-
-  document.querySelectorAll(".task-tile.completed")
-    .forEach(el => el.classList.remove("completed"));
-  
-  
-  if(role==="host"){
-  db.ref(`rooms/${roomId}/xenoEvent`).set(false);
-  db.ref(`rooms/${roomId}/deathEvent`).set(false);
-  db.ref(`rooms/${roomId}/alarmEvent`).set(false);
-  db.ref(`rooms/${roomId}/selfdestructEvent`).set(false);
-  }
-
-  location.reload();
+  resetModal.classList.remove("hidden"); 
 });
 
 
@@ -59,6 +41,9 @@ const contaminationTask = document.getElementById("contamination-task");
 
 /* BUTTONS */
 const rescueButton = document.querySelector(".rescue-btn");
+
+const acceptResetModal = document.getElementById("accept-reset-modal")
+const closeResetModal = document.getElementById("close-reset-modal")
 
 /* EVENTS */
 const xenoEvent = document.getElementById("xeno-event");
@@ -76,6 +61,8 @@ const modal = document.getElementById("event-modal");
 const modalTitle = document.getElementById("modal-title");
 const modalText = document.getElementById("modal-text");
 const closeModal = document.getElementById("close-modal");
+
+const resetModal = document.getElementById("reset-modal")
 
 
 /* room-info */
@@ -265,6 +252,22 @@ function checkEscape(){
   
   
 }
+
+
+function checkContamination(){
+  
+  if(contaminationEvent.classList.contains("active")){
+  contaminationTask.classList.remove("hidden")
+  }
+  
+  else{
+      contaminationTask.classList.add("hidden")
+  }
+  
+  
+}
+
+
 
 /* -------------------- */
 /* MODAL */
@@ -499,6 +502,7 @@ function loadGame(roomId) {
   checkKapsel();
   checkIsolation();
   checkRescue();
+  checkContamination()
 };
 
 
@@ -559,6 +563,36 @@ function initFirebase(roomId){
 }
 
 
+acceptResetModal.addEventListener("click", ()=>{
+  
+  localStorage.removeItem(`NemesisGameRoom-${roomId}`)
+
+  // optional: sofort visuell resetten (ohne reload wäre noch sauberer)
+  document.querySelectorAll(".mission-tile.active")
+    .forEach(el => el.classList.remove("active"));
+
+  document.querySelectorAll(".task-tile.completed")
+    .forEach(el => el.classList.remove("completed"));
+  
+  
+  if(role==="host"){
+  db.ref(`rooms/${roomId}/xenoEvent`).set(false);
+  db.ref(`rooms/${roomId}/deathEvent`).set(false);
+  db.ref(`rooms/${roomId}/alarmEvent`).set(false);
+  db.ref(`rooms/${roomId}/selfdestructEvent`).set(false);
+  }
+  
+  resetModal.classList.add("hidden")
+
+  location.reload();
+  
+})
+
+
+closeResetModal.addEventListener("click", ()=>{
+  resetModal.classList.add("hidden")
+  
+})
 
 
 
