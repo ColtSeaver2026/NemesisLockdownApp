@@ -2,14 +2,16 @@
     margin:0;
     padding:0;
     box-sizing:border-box;
-  
-
-}
+  }
 
 body{
     font-family:Arial, HelvetiFca, sans-serif;
     background:#121212;
     color:white;
+}
+
+h1{
+  font-size: 20px; 
 }
 
 /* Header */
@@ -19,6 +21,7 @@ header{
     padding:20px;
 
     display:flex;
+    flex-wrap: wrap; 
     justify-content:space-between;
     align-items:center;
 
@@ -36,7 +39,7 @@ button{
 
   padding: 15px;
   margin: 5px 0 10px 0; 
-  text-align: left;
+  text-align: center;
 
   background: #1a1a1a;
   color: #F5F1E8;
@@ -68,7 +71,7 @@ main{
 
 #room-list{
     display:flex;
-    flex-direction:column;
+    flex-wrap: wrap;
     gap:20px;
 }
 
@@ -77,25 +80,27 @@ main{
 .room-card{
 
     display:flex;
-    justify-content:space-between;
-    align-items:center;
-
+    flex-direction: column; 
+  
+    width: clamp(130px, 40vw, 180px);
+    
     padding:20px;
-
-    border-radius:10px;
 
     background:#1f1f1f;
 
-    border:1px solid #333;
+    border: 2px solid #374151; 
 }
 
-.room-info{
+
+.room-name{
     display:flex;
     flex-direction:column;
-    gap:8px;
+    margin-bottom:8px;
+    
+    font-size: 20px; 
 }
 
-.room-info h2{
+.room-id {
     margin-bottom:8px;
 }
 
@@ -109,9 +114,12 @@ main{
   
   height: 200px; 
   
+ 
+  
   background: black; 
   border: 2px solid #374151; 
-  width: 50%;
+  width: clamp(250px, 90%, 500px);
+
   padding: 20px; 
   
   display: flex; 
@@ -143,4 +151,105 @@ main{
 
 .hidden{
   display: none; 
+}
+
+.navigator{
+  position: fixed;
+    right: 20%;
+    bottom: 15%;
+    z-index: 9999;
+  
+}
+
+.navigator button{
+    position: absolute;
+
+    width:60px;
+    height:60px;
+
+    border-radius:50%;
+    border:1px solid #374151;
+
+    cursor:pointer;
+
+    font-size:22px;
+
+    transition:.35s;
+}
+
+.nav-main{
+    background: #1f1f1f;
+    color:white;
+    z-index:2;
+  
+}
+
+.nav-item{
+
+    background:#2a2a2a;
+    color:white;
+
+    opacity:0;
+    pointer-events:none;
+
+    transform:translate(0,0) scale(.5);
+}
+
+
+
+.navigator.open .nav-item{
+    opacity:1;
+    pointer-events:auto;
+}
+
+/* links */
+
+.navigator.open .nav-1{
+    transform:translate(-85px,0);
+  
+     background-image: url("https://s1.directupload.eu/images/260707/hukb9nin.jpg");
+     background-repeat: no-repeat;
+     background-position: center;
+     background-size: 100%;
+}
+
+/* links oben */
+
+.navigator.open .nav-2{
+    transform:translate(-60px,-60px);
+  
+     background-image: url("https://s1.directupload.eu/images/260707/547xp2wi.jpg");
+     background-repeat: no-repeat;
+     background-position: center;
+     background-size: 100%;
+}
+
+/* oben */
+
+.navigator.open .nav-3{
+    transform:translate(0,-85px);
+  
+     background-image: url("https://s1.directupload.eu/images/260707/s8urzhbr.jpg");
+     background-repeat: no-repeat;
+     background-position: center;
+     background-size: 100%;
+}
+
+/* Hover */
+
+.navigator button:hover{
+
+    transform:scale(1.08);
+}
+
+.navigator.open .nav-1:hover{
+    transform:translate(-85px,0) scale(1.08);
+}
+
+.navigator.open .nav-2:hover{
+    transform:translate(-60px,-60px) scale(1.08);
+}
+
+.navigator.open .nav-3:hover{
+    transform:translate(0,-85px) scale(1.08);
 }
