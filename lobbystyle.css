@@ -1,253 +1,255 @@
-const firebaseConfig = {
-  apiKey: "AIzaSyCgAbaZ3bmmQG_bAAbnq6_Q6E7yW4_xv_A",
-    authDomain: "nemesis-ld.firebaseapp.com",
-    projectId: "nemesis-ld",
-    storageBucket: "nemesis-ld.firebasestorage.app",
-    messagingSenderId: "580839432274",
-    appId: "1:580839432274:web:edc1bbdfd724721018ff8b",
-    measurementId: "G-WHHS9TP2FW",
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+  }
 
-    databaseURL: "https://nemesis-ld-default-rtdb.europe-west1.firebasedatabase.app"
-
-};
-
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
-
-/* -------------------- */
-/* Variablen */
-/* -------------------- */
-
-let currentRoomId=""
-
-
-/* -------------------- */
-/* Button */
-/* -------------------- */
-
-const navHome = document.getElementById("nav-home");
-const navMap = document.getElementById("nav-map");
-const navProtocol = document.getElementById("nav-protocol");
-
-const createRoomBtn = document.getElementById("create-room-btn");
-const createBtn = document.getElementById("create-btn");
-const cancelBtn = document.getElementById("cancel-btn");
-const enterBtn = document.getElementById("enter-btn");
-const cancelPasswordBtn = document.getElementById("cancel-password-btn");
-const alertCancelBtn = document.getElementById("alert-cancel-btn");
-
-
-/* -------------------- */
-/* Input */
-/* -------------------- */
-
-const roomName = document.getElementById("room-name");
-
-const modalCreate = document.getElementById("modal-create");
-const modalPassword = document.getElementById("ask-password")
-
-const alertModal = document.getElementById("alert-modal")
-const alertText = document.getElementById("alert-text")
-
-
-
-
-createRoomBtn.addEventListener("click", ()=>{
-  
-  modalCreate.classList.remove("hidden")
-  
-})
-
-
-createBtn.addEventListener("click", () => {
-
-    const name = roomName.value.trim();
-  
-    const roomPassword = document.getElementById("roomPassword");
-    const password = roomPassword.value.trim(); 
-
-    if (name.length === 0) {
-        alertModal.classList.remove("hidden")
-        alertText.innerText="Bitte Raumnamen eingeben."
-        return;
-    }
-  
-    if(password.length === 0){
-      alertModal.classList.remove("hidden")
-      alertText.innerText="Bitte Passwort eingeben."
-      return
-    }
-
-    const roomId = generateRoomCode();
-
-    db.ref(`rooms/${roomId}`).set({
-        name: name,
-        password: password,
-        xenoEvent: false,
-        deathEvent: false,
-        alarmEvent: false, 
-        selfdestructEvent: false, 
-        createdAt: Date.now()
-    });
-  
-  
-    localStorage.setItem("NemesisRoomId", roomId);
-    localStorage.setItem(`${roomId}-NemesisRole`, "host");
-
-    modalCreate.classList.add("hidden");
-  
-    window.location.href = `https://coltseaver2026.github.io/NemesisLockdownApp/protocol.html`;
-
-});
-
-
-
-cancelBtn.addEventListener("click", ()=>{
-  modalCreate.classList.add("hidden");
-})
-
-
-
-
-function generateRoomCode() {
-    return Math.random().toString(36).substring(2, 8).toUpperCase();
+body{
+    font-family:Arial, HelvetiFca, sans-serif;
+    background:#121212;
+    color:white;
 }
 
+h1{
+  font-size: 20px; 
+}
+
+/* Header */
+
+header{
+    background:#1d1d1d;
+    padding:20px;
+
+    display:flex;
+    flex-wrap: wrap; 
+    justify-content:space-between;
+    align-items:center;
+
+    border-bottom:1px solid #333;
+}
+
+.header-buttons{
+    display:flex;
+    gap:10px;
+}
+
+/* Buttons */
+
+button{
+
+  padding: 15px;
+  margin: 5px 0 10px 0; 
+  text-align: center;
+
+  background: #1a1a1a;
+  color: #F5F1E8;
+
+  border: 2px solid #374151; 
 
 
-function renderRoom(roomId, roomData) {
+  font-size: 12px;
+  line-height: 1.4;
 
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+button:hover{
+   transform: scale(1.05);
+  border-color: #A8D8FF;
+  box-shadow:
+    0 0 10px rgba(168, 216, 255, 0.3),
+    0 0 20px rgba(179, 58, 58, 0.2);
+}
+
+/* Inhalt */
+
+main{
+    width:min(1100px,90%);
+    margin:40px auto;
+}
+
+#room-list{
+    display:flex;
+    flex-wrap: wrap;
+    gap:20px;
+}
+
+/* Lobby-Karte */
+
+.room-card{
+
+    display:flex;
+    flex-direction: column; 
+  
+    width: clamp(130px, 40vw, 180px);
     
-    const container = document.getElementById("room-list");
+    padding:20px;
 
-    const roomEl = document.createElement("div");
-    roomEl.classList.add("room-card");
+    background:#1f1f1f;
 
-    const title = document.createElement("h2");
-    title.classList.add("room-name");
-    title.textContent = roomData.name || "Unbenannte Lobby";
-
-    const idText = document.createElement("div");
-    idText.classList.add("room-id");
-    idText.textContent = `ID: ${roomId}`;
-
-    const joinBtn = document.createElement("button");
-    joinBtn.textContent = "Beitreten";
-
-    joinBtn.addEventListener("click", () => {
-        
-        currentRoomId = roomId;
-        
-        modalPassword.classList.remove("hidden")
-           
-    });
-  
-
-    roomEl.appendChild(title);
-    roomEl.appendChild(idText);
-    roomEl.appendChild(joinBtn);
-
-    container.appendChild(roomEl);
+    border: 2px solid #374151; 
 }
 
 
-  enterBtn.addEventListener("click", ()=>{
+.room-name{
+    display:flex;
+    flex-direction:column;
+    margin-bottom:8px;
     
-      const enteredPassword = document.getElementById("enter-password").value.trim()
-      
-      db.ref(`rooms/${currentRoomId}/password`).once("value").then((snapshot) => {
-        
-          const passwordInDb = snapshot.val();
-        
-          if(enteredPassword==passwordInDb){
-            
-            
-            localStorage.setItem("NemesisRoomId", currentRoomId);
-            joinRoom(currentRoomId)
-     
-          }
-        
-        else{
-          alertModal.classList.remove("hidden")
-          alertText.innerText ="Passwort falsch"
-          
-        }
+    font-size: 20px; 
+}
 
-        
-      })
+.room-id {
+    margin-bottom:8px;
+}
 
+/* Modal */
 
-    });
+.modal{
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
   
-    cancelPasswordBtn.addEventListener("click", ()=>{
-      modalPassword.classList.add("hidden")
-      
-    });
+  height: 200px; 
+  
+ 
+  
+  background: black; 
+  border: 2px solid #374151; 
+  width: clamp(250px, 90%, 500px);
 
+  padding: 20px; 
+  
+  display: flex; 
+  flex-wrap: wrap; 
+  justify-content: center; 
+  
+  gap: 20px; 
+  
+  position: fixed;
+  z-index: 100;
+  
+  
+  
+}
 
-function joinRoom(roomId) {
+#alert-modal{
+  flex-direction: column; 
+  align-items: center; 
+ 
 
-    window.location.href = `https://coltseaver2026.github.io/NemesisLockdownApp/protocol.html`;
+  z-index: 9999;
+}
 
+#room-name, #roomPassword, #enter-password{
+  width: 100%;
+  height: 25px; 
+  padding: 5px; 
+}
+
+.hidden{
+  display: none; 
+}
+
+.navigator{
+  position: fixed;
+    right: 20%;
+    bottom: 15%;
+    z-index: 9999;
+  
+}
+
+.navigator button{
+    position: absolute;
+
+    width:60px;
+    height:60px;
+
+    border-radius:50%;
+    border:1px solid #374151;
+
+    cursor:pointer;
+
+    font-size:22px;
+
+    transition:.35s;
+}
+
+.nav-main{
+    background: #1f1f1f;
+    color:white;
+    z-index:2;
+  
+}
+
+.nav-item{
+
+    background:#2a2a2a;
+    color:white;
+
+    opacity:0;
+    pointer-events:none;
+
+    transform:translate(0,0) scale(.5);
 }
 
 
-alertCancelBtn.addEventListener("click", ()=>{
-     alertModal.classList.add("hidden")
 
-})
+.navigator.open .nav-item{
+    opacity:1;
+    pointer-events:auto;
+}
 
+/* links */
 
+.navigator.open .nav-1{
+    transform:translate(-85px,0);
+  
+     background-image: url("https://s1.directupload.eu/images/260707/hukb9nin.jpg");
+     background-repeat: no-repeat;
+     background-position: center;
+     background-size: 100%;
+}
 
+/* links oben */
 
+.navigator.open .nav-2{
+    transform:translate(-60px,-60px);
+  
+     background-image: url("https://s1.directupload.eu/images/260707/547xp2wi.jpg");
+     background-repeat: no-repeat;
+     background-position: center;
+     background-size: 100%;
+}
 
-/* -------------------- */
-/* Firebase Listener in Javascript */
-/* -------------------- */
+/* oben */
 
+.navigator.open .nav-3{
+    transform:translate(0,-85px);
+  
+     background-image: url("https://s1.directupload.eu/images/260707/s8urzhbr.jpg");
+     background-repeat: no-repeat;
+     background-position: center;
+     background-size: 100%;
+}
 
-db.ref("rooms").on("value", (snapshot) => {
+/* Hover */
 
-    const data = snapshot.val();
+.navigator button:hover{
 
-    const container = document.getElementById("room-list");
-    container.innerHTML = ""; // wichtig: vorher leeren
+    transform:scale(1.08);
+}
 
-    if (!data) return;
+.navigator.open .nav-1:hover{
+    transform:translate(-85px,0) scale(1.08);
+}
 
-    Object.entries(data).forEach(([roomId, roomData]) => {
-        renderRoom(roomId, roomData);
-    });
-});
+.navigator.open .nav-2:hover{
+    transform:translate(-60px,-60px) scale(1.08);
+}
 
-
-const navigatorMenu = document.querySelector(".navigator");
-
-navigatorMenu.querySelector(".nav-main").addEventListener("click", () => {
-
-    navigatorMenu.classList.toggle("open");
-
-});
-
-
-navHome.addEventListener("click", ()=>{
-      window.location.href = "https://coltseaver2026.github.io/NemesisLockdownApp/";
-
-})
-                         
- navMap.addEventListener("click", ()=>{
-      window.location.href = "https://coltseaver2026.github.io/NemesisLockdownApp/map.html";
-
-})
-
-navProtocol.addEventListener("click", ()=>{
-      window.location.href = "https://coltseaver2026.github.io/NemesisLockdownApp/protocol.html";
-
-})
-
-
-
-
-
-
-
+.navigator.open .nav-3:hover{
+    transform:translate(0,-85px) scale(1.08);
+}
