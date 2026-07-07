@@ -127,6 +127,13 @@ body {
   
 }
 
+.button-wrapper{
+  display: flex; 
+  gap: 15px; 
+  justify-content: center; 
+   
+}
+
 
 
 .title {
@@ -360,6 +367,41 @@ body {
   box-shadow:
     0 0 10px rgba(168, 216, 255, 0.3),
     0 0 20px rgba(179, 58, 58, 0.2);
+}
+
+
+#accept-reset-modal, #close-reset-modal{
+  
+  width: 45%;
+  
+  font-size: clamp(10px, 3vw, 20px);
+  
+  padding: 0.8em 1.2em;
+  margin-bottom: 1rem;
+  
+
+  background: #1a1a1a;
+  border: 2px solid #374151; 
+  color: #F5F1E8;
+
+  cursor: pointer;
+  transition: 0.2s ease;
+  letter-spacing: 1px;
+}
+
+#accept-reset-modal:hover, #close-reset-modal:hover{
+  transform: scale(1.05);
+  border-color: #A8D8FF;
+  box-shadow:
+    0 0 10px rgba(168, 216, 255, 0.3),
+    0 0 20px rgba(179, 58, 58, 0.2);
+}
+
+
+
+
+#reset-title{
+  text-align: center; 
 }
 
 
