@@ -10,7 +10,6 @@
 <body>
  <div class="layout">
   <div class="control-wrapper">
-    <button class="tile control-button" id="switchToMap">Karte</button>
     <button class="tile control-button" id="resetBtn">Zurücksetzen</button>
   </div>
   
@@ -60,7 +59,7 @@
         </div>
       
      <div class="down-right contamination-wrapper">
-      <button class="tile mission-tile" id="contamination-event"><div class="special-title">Kontaminationskarte im Deck?</div>Ja</button>
+      <button class="tile mission-tile" id="contamination-event"><div class="special-title">Kontaminationskarte im Deck?</div></button>
       </div>
       
       
@@ -103,7 +102,7 @@
      
 
       
-     <aside class="sidebar">
+     <aside class="sidebar" id="hint-sidebar">
       <h2 class="title hint-title">HINWEISE</h2>
       
     <div class="left hint-wrapper">
@@ -138,8 +137,35 @@
     </div>
   </div>
     
+    <div class="modal hidden" id="option-modal">
+    <div class="modal-box">
+      
+       <div class="option-row">
+      <label for="show-events">
+        Ereignisse anzeigen?
+      </label>
+      <input type="checkbox" id="show-events">
+    </div>
+      
+      
+      <div class="button-wrapper">
+ 
+      <button id="close-option-modal">Schließen</button>
+      </div>
+    </div>
+  </div>
+    
     
     <div id="room-info"></div>
+    
+    
+    <div class="navigator">
+    <button class="nav-main">☰</button>
+
+    <button class="nav-item nav-1" id="nav-home"></button>
+    <button class="nav-item nav-2" id="nav-map"></button>
+    <button class="nav-item nav-3" id="nav-option"></button>
+</div>
 
   <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-database-compat.js"></script>
