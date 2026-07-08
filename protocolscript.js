@@ -16,11 +16,6 @@ const db = firebase.database();
 
 
 
-const switchToMap = document.getElementById("switchToMap");
-
-switchToMap.addEventListener("click", () => {
-  location.href = "https://coltseaver2026.github.io/NemesisLockdownApp/map.html";
-});
 
 const resetBtn = document.getElementById("resetBtn");
 
@@ -30,6 +25,9 @@ resetBtn.addEventListener("click", () => {
 
 
 const eventSidebar = document.getElementById("event-sidebar");
+
+const showEvents = document.getElementById("show-events");
+
 
 /* TASKS */
 const signalTask = document.getElementById("signal-task");
@@ -44,6 +42,12 @@ const rescueButton = document.querySelector(".rescue-btn");
 
 const acceptResetModal = document.getElementById("accept-reset-modal")
 const closeResetModal = document.getElementById("close-reset-modal")
+
+const navHome = document.getElementById("nav-home");
+const navMap = document.getElementById("nav-map");
+const navOption = document.getElementById("nav-option");
+
+const closeOptionModal = document.getElementById("close-option-modal")
 
 /* EVENTS */
 const xenoEvent = document.getElementById("xeno-event");
@@ -63,6 +67,9 @@ const modalText = document.getElementById("modal-text");
 const closeModal = document.getElementById("close-modal");
 
 const resetModal = document.getElementById("reset-modal")
+
+const optionModal = document.getElementById("option-modal")
+
 
 
 /* room-info */
@@ -553,9 +560,6 @@ function initFirebase(roomId){
     else{
        selfdestructEvent.classList.remove("active");
     }
-
-  
-  
                                     }
             )
   
@@ -593,6 +597,56 @@ closeResetModal.addEventListener("click", ()=>{
   resetModal.classList.add("hidden")
   
 })
+
+
+
+const navigatorMenu = document.querySelector(".navigator");
+
+navigatorMenu.querySelector(".nav-main").addEventListener("click", () => {
+
+    navigatorMenu.classList.toggle("open");
+
+});
+
+
+navHome.addEventListener("click", ()=>{
+      window.location.href = "https://coltseaver2026.github.io/NemesisLockdownApp/";
+
+})
+                         
+ navMap.addEventListener("click", ()=>{
+      window.location.href = "https://coltseaver2026.github.io/NemesisLockdownApp/map.html";
+
+})
+
+navOption.addEventListener("click", ()=>{
+  
+      if(!eventSidebar.classList.contains("hidden")){
+           showEvents.checked = true;
+      }
+  
+      optionModal.classList.remove("hidden")
+
+})
+
+
+
+closeOptionModal.addEventListener("click", () => {
+  optionModal.classList.add("hidden")
+})
+
+
+
+showEvents.addEventListener("change", () => {
+    if (showEvents.checked) {
+        eventSidebar.classList.remove("hidden")
+    } else {
+        eventSidebar.classList.add("hidden")
+    }
+});
+
+
+
 
 
 
