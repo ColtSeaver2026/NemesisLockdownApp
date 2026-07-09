@@ -1,5 +1,3 @@
-const switchToProtocolBtn = document.getElementById("switchToProtocol")
-
 const sessionInfoNumber = localStorage.getItem("NemesisRoomId");
 const sessionInfo = document.getElementById("sessionInfo")
 
@@ -20,6 +18,17 @@ const roomFunctionWrapper2 = document.getElementById("roomFunctionWrapper2")
 const functionDescripton1 = document.getElementById("functionDescripton1")
 const functionDescripton2 = document.getElementById("functionDescripton2")
 const cancelRoomInfoBtn = document.getElementById("cancelRoomInfo")
+
+const navHome = document.getElementById("nav-home");
+const navProtocol = document.getElementById("nav-protocol");
+const navOption = document.getElementById("nav-option");
+
+const optionModal = document.getElementById("option-modal")
+const closeOptionModal = document.getElementById("close-option-modal")
+
+const resetModal = document.getElementById("reset-modal")
+const acceptResetModal = document.getElementById("accept-reset-modal")
+const closeResetModal = document.getElementById("close-reset-modal")
 
 const resetRooms = document.getElementById("resetRooms")
 
@@ -203,9 +212,7 @@ sessionInfo.innerText = sessionInfoNumber;
 /* Wechsel zur Eindämmungsprotokoll Übersicht */
 /* -------------------------------- */
 
-switchToProtocolBtn.addEventListener("click", () => {
-    location.href = "https://coltseaver2026.github.io/NemesisLockdownApp/protocol.html";
-});
+
 
 /* -------------------------------- */
 /* Start: Fragezeichen erzeugen */
@@ -534,8 +541,59 @@ function resetGame() {
 
 
 resetRooms.addEventListener("click", ()=>{
-   resetGame()
+  
+    resetModal.classList.remove("hidden"); 
+
+  
 })
+
+
+
+const navigatorMenu = document.querySelector(".navigator");
+
+navigatorMenu.querySelector(".nav-main").addEventListener("click", () => {
+
+    navigatorMenu.classList.toggle("open");
+
+});
+
+
+navHome.addEventListener("click", ()=>{
+      window.location.href = "https://coltseaver2026.github.io/NemesisLockdownApp/";
+
+})
+                         
+ navProtocol.addEventListener("click", ()=>{
+      localStorage.setItem("NemesisMapSwitch", "true")
+      window.location.href = "https://coltseaver2026.github.io/NemesisLockdownApp/protocol.html";
+
+})
+
+navOption.addEventListener("click", ()=>{
+  
+      optionModal.classList.remove("hidden")
+      navigatorMenu.classList.toggle("open");
+
+
+})
+
+
+closeOptionModal.addEventListener("click", () => {
+  optionModal.classList.add("hidden")
+})
+
+
+acceptResetModal.addEventListener("click", ()=>{
+   resetGame()
+  
+})
+
+
+closeResetModal.addEventListener("click", ()=>{
+  resetModal.classList.add("hidden")
+  
+})
+
 
 
 loadGame();
