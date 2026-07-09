@@ -105,6 +105,18 @@ h3{
   z-index: 1000;
 }
 
+
+.modal-box {
+  width: 520px;
+  color: #F5F1E8;
+  background: #1a1a1a;
+  border: 2px solid #374151;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
 .hidden {
   display: none;
 }
@@ -193,6 +205,8 @@ h3{
   
 }
 
+
+
 .unlocked-rooms-wrapper{
   width: 98%;
   max-width: 900px;
@@ -271,4 +285,159 @@ h3{
   color: white; 
   margin-top: 10px; 
   text-align: center; 
+  margin-bottom: 80px; 
+}
+
+
+
+.navigator{
+  position: fixed;
+    right: 20%;
+    bottom: 15%;
+    z-index: 9999;
+  
+}
+
+.navigator button{
+    position: absolute;
+
+    width:60px;
+    height:60px;
+
+    border-radius:50%;
+    border:1px solid #374151;
+
+    cursor:pointer;
+
+    font-size:22px;
+
+    transition:.35s;
+}
+
+.nav-main{
+    background: #1f1f1f;
+    color:white;
+    z-index:2;
+  
+}
+
+.nav-item{
+
+    background:#2a2a2a;
+    color:white;
+
+    opacity:0;
+    pointer-events:none;
+
+    transform:translate(0,0) scale(.5);
+}
+
+
+
+.navigator.open .nav-item{
+    opacity:1;
+    pointer-events:auto;
+}
+
+/* links */
+
+.navigator.open .nav-1{
+    transform:translate(-85px,0);
+  
+     background-image: url("https://s1.directupload.eu/images/260707/hukb9nin.jpg");
+     background-repeat: no-repeat;
+     background-position: center;
+     background-size: 100%;
+}
+
+/* links oben */
+
+.navigator.open .nav-2{
+    transform:translate(-60px,-60px);
+  
+     background-image: url("https://s1.directupload.eu/images/260707/s8urzhbr.jpg");
+     background-repeat: no-repeat;
+     background-position: center;
+     background-size: 100%;
+}
+
+/* oben */
+
+.navigator.open .nav-3{
+    transform:translate(0,-85px);
+  
+     background-image: url("https://s1.directupload.eu/images/260708/plqe8yog.png");
+     background-repeat: no-repeat;
+     background-position: center;
+     background-size: 200%;
+}
+
+/* Hover */
+
+.navigator button:hover{
+
+    transform:scale(1.08);
+}
+
+.navigator.open .nav-1:hover{
+    transform:translate(-85px,0) scale(1.08);
+}
+
+.navigator.open .nav-2:hover{
+    transform:translate(-60px,-60px) scale(1.08);
+}
+
+.navigator.open .nav-3:hover{
+    transform:translate(0,-85px) scale(1.08);
+}
+
+
+#accept-reset-modal, #close-reset-modal, #close-option-modal{
+  
+  width: 45%;
+  
+  font-size: clamp(10px, 3vw, 20px);
+  
+  padding: 0.8em 1.2em;
+  margin-bottom: 1rem;
+  
+
+  background: #1a1a1a;
+  border: 2px solid #374151; 
+  color: #F5F1E8;
+
+  cursor: pointer;
+  transition: 0.2s ease;
+  letter-spacing: 1px;
+}
+
+#accept-reset-modal:hover, #close-reset-modal:hover, #close-option-modal:hover{
+  transform: scale(1.05);
+  border-color: #A8D8FF;
+  box-shadow:
+    0 0 10px rgba(168, 216, 255, 0.3),
+    0 0 20px rgba(179, 58, 58, 0.2);
+}
+
+
+.option-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+    color:#d9f9ff; /* passend zu deinem Neon-Stil */
+    font-size:1rem;
+}
+
+#resetRooms{
+  width: 90%;
+  margin: 0 auto; 
+}
+
+
+.button-wrapper2{
+  display: flex; 
+  gap: 15px; 
+  justify-content: center; 
+   
 }
