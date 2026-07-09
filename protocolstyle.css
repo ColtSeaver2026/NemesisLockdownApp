@@ -340,6 +340,15 @@ body {
   z-index: 999;
 }
 
+#reset-modal{
+  z-index: 9999;
+}
+
+#resetBtn{
+  width: 90%;
+  margin: 0 auto; 
+}
+
 .modal:not(.hidden) {
   display: flex;
 }
