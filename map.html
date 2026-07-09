@@ -10,8 +10,7 @@
 <body>
 
 <div class="button-wrapper">
-<button class="control margin" id="switchToProtocol">Eindämmungsprotokolle / Aufgaben</button>
-<button class="control margin" id="resetRooms">Spielstand zurücksetzen</button>
+
   </div>
 
 <div class="map">
@@ -125,9 +124,44 @@ points="865,1145 943,1145 981,1212 943,1276 865,1276 829,1208"/>
   
 </div>
   
- <div id="sessionInfo">TEst</div> 
+  
+  <div class="modal hidden" id="option-modal">
+    <div class="modal-box">
+     
+      <div class="option-row">
+      <button class="control margin" id="resetRooms">Spielstand zurücksetzen</button>
+      </div>
+      
+   <div class="modal hidden" id="reset-modal">
+    <div class="modal-box">
+      <h2 id="reset-title">Achtung! Alle Daten werden zurückgesetzt.</h2>
+      <div class="button-wrapper2">
+      <button id="accept-reset-modal">Verstanden</button>
+      <button id="close-reset-modal">Abbrechen</button>
+      </div>
+    </div>
+  </div>
+      
+      
+      <div class="button-wrapper">
+ 
+      <button id="close-option-modal">Schließen</button>
+      </div>
+    </div>
+  </div>
+  
+ <div id="sessionInfo"></div> 
+  
+  <div class="navigator">
+    <button class="nav-main">☰</button>
+
+    <button class="nav-item nav-1" id="nav-home"></button>
+    <button class="nav-item nav-2" id="nav-protocol"></button>
+    <button class="nav-item nav-3" id="nav-option"></button>
+</div>
   
   <script src="mapscript.js"></script>
+  
 
 </body>
 </html>
