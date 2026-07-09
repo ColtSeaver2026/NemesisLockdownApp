@@ -372,6 +372,15 @@ db.ref(`rooms/${roomId}/xenoEvent`).on("value", (snapshot) => {
   if (data === null) return;
   
   
+  const mapSwitch = localStorage.getItem("NemesisMapSwitch");
+  
+  if(mapSwitch === "true"){
+    localStorage.removeItem("NemesisMapSwitch")
+    return
+  }
+
+  
+  
   if (data) {
     openModal("Erste Begegnung", "Entscheide dich für eines deiner beiden Ziele.");
     xenoEvent.classList.add("active")
@@ -394,6 +403,13 @@ db.ref(`rooms/${roomId}/deathEvent`).on("value", (snapshot) => {
   
   if (data === null) return;
   
+  const mapSwitch = localStorage.getItem("NemesisMapSwitch");
+  
+  if(mapSwitch === "true"){
+    localStorage.removeItem("NemesisMapSwitch")
+    return
+  }
+  
   if (data) {
     openModal("Tod des ersten Charakters", "Entscheide dich für eines deiner beiden Ziele. Das Haupttor zum Bunker wurde geöffnet.");             deathEvent.classList.add("active")
   }
@@ -413,6 +429,13 @@ db.ref(`rooms/${roomId}/alarmEvent`).on("value", (snapshot) => {
   const data = snapshot.val();
   
   if (data === null) return;
+  
+  const mapSwitch = localStorage.getItem("NemesisMapSwitch");
+  
+  if(mapSwitch === "true"){
+    localStorage.removeItem("NemesisMapSwitch")
+    return
+  }
   
    if (data) {
         openModal("Alarm ausgelöst", "Isolationsraum kann genutzt werden.");  
@@ -435,6 +458,14 @@ db.ref(`rooms/${roomId}/selfdestructEvent`).on("value", (snapshot) => {
   const data = snapshot.val();
   
   if (data === null) return;
+  
+  
+  const mapSwitch = localStorage.getItem("NemesisMapSwitch");
+
+  if(mapSwitch === "true"){
+    localStorage.removeItem("NemesisMapSwitch")
+    return
+  }
 
   if (data) {
     openModal("Selbstzerstörung aktiviert", "Das Haupttor zum Bunker öffnet sich, sobald das Zeitplättchen vorrückt und dadurch die gelbe Seite des Selbstzerstörungsplättchens sichtbar wird.");
@@ -626,6 +657,8 @@ navOption.addEventListener("click", ()=>{
       }
   
       optionModal.classList.remove("hidden")
+      navigatorMenu.classList.toggle("open");
+
 
 })
 
