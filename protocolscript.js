@@ -373,6 +373,8 @@ db.ref(`rooms/${roomId}/xenoEvent`).on("value", (snapshot) => {
   
   
   const mapSwitch = localStorage.getItem("NemesisMapSwitch");
+
+  console.log(mapSwitch); 
   
   if(mapSwitch === "true"){
     localStorage.removeItem("NemesisMapSwitch")
