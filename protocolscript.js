@@ -84,7 +84,8 @@ const roomInfo = document.getElementById("room-info");
 const roomId = localStorage.getItem("NemesisRoomId");
 const role = localStorage.getItem(`${roomId}-NemesisRole`);
 
-let nemesisEventStatus;
+let nemesisEventStatus = setNemesisEventStatus();
+
 
 /* -------------------- */
 /* Die Seite wird aufgerufen und die für das Spiel relevanten Informationen werden abgerufen.*/
@@ -112,9 +113,7 @@ function init() {
     }
     
     
-    
-    //setNemesisEventStatus greift auf den localStorage zu. Dort wird versucht den gespeicherten Event Status abzurufen. Wenn dieser vorhanden ist, wenn die im localStorage gespeicherten Event Stati in dem Objekt eventStatus gespeichert. Dies ist notwendig, damit man beim sprung auf die Protocol-Seite überprüfen kann, ob sich etwas übeprüfen kann, die EventWerte in firebase neu sind oder bereits in localStorage vorliegen. Wenn Sie vorliegen, soll kein Modal mit Infos zum Event geöffnet werden. 
-    nemesisEventStatus = setNemesisEventStatus();
+  
     
     
     //loadGame holt die Informationen zu den Eindämmungsprotokollen aus dem local storage und setzt die active klassen bei den zugehörigen Button. Näheres unten. 
@@ -378,10 +377,15 @@ contaminationEvent.addEventListener("click", () => {
 //Der Code hört die ganze Zeit hin, ob sich xenoEvent geändert hat. Auch beim erneuten aufrufen der Seite - z.B. beim Wechsel zwischen Map und Protocol - wird erneut zugehört. 
 db.ref(`rooms/${roomId}/xenoEvent`).on("value", (snapshot) => {
   
+  
   //Die Info von xenoEvent wird in Data gespeichert. 
   const data = snapshot.val();
+  
+
+  
 
 if (data === null) return;
+    
 
 // Button IMMER an Firebase anpassen
 if (data) {
@@ -392,6 +396,9 @@ if (data) {
 
 // Prüfen, ob sich überhaupt etwas geändert hat
 if (nemesisEventStatus.xenoEvent === data) return;
+  
+  console.log("xenoEvent III")
+  
 
 // localStorage aktualisieren
 nemesisEventStatus.xenoEvent = data;
@@ -669,30 +676,28 @@ showEvents.addEventListener("change", () => {
 
 
 function setNemesisEventStatus(){
-   
-  //Die Funktion holt Event Informationen zum aktuellen Raum aus dem localStorage und speichert sie in nemesisEventStatus. Über parse wird der im localStorage hinterlegte String gleich als Objekt ausgegeebn.  
-  let nemesisEventStatus = JSON.parse(
+  
+  let status = JSON.parse(
     localStorage.getItem(`${roomId}-localNemesisEventStatus`)
   );
-  
-  //Es wird überprüft, ob nun überaupt Informationen in nemesisEventStatus gespeichert wird. Wenn im local Storage keine Infos zu finden waren, wird null zurückgegeben. Wenn keine Infos, wird nemesisEventStatus als objekt gespeichert, in dem zunächst alle Werte false sind - Ausgangssituation. 
-  if(nemesisEventStatus===null){
-    
-    nemesisEventStatus = {
-      xenoEvent: false, 
-      deathEvent: false, 
-      alarmEvent: false, 
-      selfdestructEvent: false, 
+
+  if(status === null){
+    status = {
+      xenoEvent: false,
+      deathEvent: false,
+      alarmEvent: false,
+      selfdestructEvent: false
     };
   }
-  
-   localStorage.setItem(
+
+  localStorage.setItem(
     `${roomId}-localNemesisEventStatus`,
-    JSON.stringify(nemesisEventStatus)
+    JSON.stringify(status)
   );
-  
-  return nemesisEventStatus;
+
+  return status;
 }
+
 
 
 
