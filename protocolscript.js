@@ -84,6 +84,7 @@ const roomInfo = document.getElementById("room-info");
 const roomId = localStorage.getItem("NemesisRoomId");
 const role = localStorage.getItem(`${roomId}-NemesisRole`);
 
+
 let nemesisEventStatus = setNemesisEventStatus();
 
 
@@ -669,8 +670,11 @@ closeOptionModal.addEventListener("click", () => {
 showEvents.addEventListener("change", () => {
     if (showEvents.checked) {
         eventSidebar.classList.remove("hidden")
+        localStorage.setItem(`${roomId}-NemesisRole`, "host");
     } else {
         eventSidebar.classList.add("hidden")
+        localStorage.removeItem(`${roomId}-NemesisRole`);
+
     }
 });
 
