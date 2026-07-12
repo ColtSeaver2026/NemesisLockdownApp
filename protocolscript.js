@@ -84,20 +84,27 @@ const roomInfo = document.getElementById("room-info");
 const roomId = localStorage.getItem("NemesisRoomId");
 const role = localStorage.getItem(`${roomId}-NemesisRole`);
 
+let nemesisEventStatus;
 
+/* -------------------- */
+/* Die Seite wird aufgerufen und die für das Spiel relevanten Informationen werden abgerufen.*/
+/* -------------------- */
 init(); 
 
 
 function init() { 
       
+  //Hier wird geschaut, ob der Teilnehmer host in diesem Spielraum ist. Wenn nicht, werden die Ereignisse nicht angezeigt. 
   if(role!=="host"){
     eventSidebar.classList.add("hidden");
     
   }
   
   
+  //Aus der Firebase Datenbank werden einmalig die Informationen des jeweils relevanten Spielraums aufgerufen. 
   db.ref(`rooms/${roomId}`).once("value").then((snapshot) => {
 
+    //Es wird überprüft, ob der Spielraum überhaupt existiert. Wenn ja, wird die ID ganze unten auf der Seit im Element roomInfo dargestellt. Wenn nicht, wird der Zusatz hinzugefügt, dass der Raum nicht mehr existiert. 
     if (snapshot.exists()) {
          roomInfo.innerText=`${roomId}`
     } else {
@@ -106,7 +113,11 @@ function init() {
     
     
     
-    initFirebase(roomId);
+    //setNemesisEventStatus greift auf den localStorage zu. Dort wird versucht den gespeicherten Event Status abzurufen. Wenn dieser vorhanden ist, wenn die im localStorage gespeicherten Event Stati in dem Objekt eventStatus gespeichert. Dies ist notwendig, damit man beim sprung auf die Protocol-Seite überprüfen kann, ob sich etwas übeprüfen kann, die EventWerte in firebase neu sind oder bereits in localStorage vorliegen. Wenn Sie vorliegen, soll kein Modal mit Infos zum Event geöffnet werden. 
+    nemesisEventStatus = setNemesisEventStatus();
+    
+    
+    //loadGame holt die Informationen zu den Eindämmungsprotokollen aus dem local storage und setzt die active klassen bei den zugehörigen Button. Näheres unten. 
     loadGame(roomId)
 });
  
@@ -364,23 +375,26 @@ contaminationEvent.addEventListener("click", () => {
 
 
 
-
+//Der Code hört die ganze Zeit hin, ob sich xenoEvent geändert hat. Auch beim erneuten aufrufen der Seite - z.B. beim Wechsel zwischen Map und Protocol - wird erneut zugehört. 
 db.ref(`rooms/${roomId}/xenoEvent`).on("value", (snapshot) => {
   
+  //Die Info von xenoEvent wird in Data gespeichert. 
   const data = snapshot.val();
   
+  //Wenn xenoEvent nicht vorhanden, endet die Ausführung des Codes. 
   if (data === null) return;
   
+  //Es wird überprüft, ob es bezüglich xenoEvent überhaupt eine Abweichung gibt zwischen localStorage und Firebase. Wenn nicht, wird der Code abgebrochen. 
+  if(nemesisEventStatus.xenoEvent===data)return;   
   
-  const mapSwitch = localStorage.getItem("NemesisMapSwitch");
+  //entsprechen sich die beiden Werte in localStorage und Firebase nicht, wird das Objekt nemesisEventStatus im key xenoEvent aktualisiert. 
+  nemesisEventStatus.xenoEvent = data; 
 
-  console.log(mapSwitch); 
-  
-  if(mapSwitch === "true"){
-    localStorage.removeItem("NemesisMapSwitch")
-    return
-  }
-
+  //Das gesamte Objekt nemesisEventStatus mit dem aktualisierten Key xenoEvent wird im localStorage gespeichert. 
+  localStorage.setItem(
+    `${roomId}-localNemesisEventStatus`,
+    JSON.stringify(nemesisEventStatus)
+  );
   
   
   if (data) {
@@ -405,12 +419,19 @@ db.ref(`rooms/${roomId}/deathEvent`).on("value", (snapshot) => {
   
   if (data === null) return;
   
-  const mapSwitch = localStorage.getItem("NemesisMapSwitch");
+  //Es wird überprüft, ob es bezüglich deathEvent überhaupt eine Abweichung gibt zwischen localStorage und Firebase. Wenn nicht, wird der Code abgebrochen. 
+  if(nemesisEventStatus.deathEvent===data)return;   
   
-  if(mapSwitch === "true"){
-    localStorage.removeItem("NemesisMapSwitch")
-    return
-  }
+  //entsprechen sich die beiden Werte in localStorage und Firebase nicht, wird das Objekt nemesisEventStatus im key deathEvent aktualisiert. 
+  nemesisEventStatus.deathEvent = data; 
+
+  //Das gesamte Objekt nemesisEventStatus mit dem aktualisierten Key deathEvent wird im localStorage gespeichert. 
+  localStorage.setItem(
+    `${roomId}-localNemesisEventStatus`,
+    JSON.stringify(nemesisEventStatus)
+  );
+  
+  
   
   if (data) {
     openModal("Tod des ersten Charakters", "Entscheide dich für eines deiner beiden Ziele. Das Haupttor zum Bunker wurde geöffnet.");             deathEvent.classList.add("active")
@@ -432,12 +453,17 @@ db.ref(`rooms/${roomId}/alarmEvent`).on("value", (snapshot) => {
   
   if (data === null) return;
   
-  const mapSwitch = localStorage.getItem("NemesisMapSwitch");
+  //Es wird überprüft, ob es bezüglich alarmEvent überhaupt eine Abweichung gibt zwischen localStorage und Firebase. Wenn nicht, wird der Code abgebrochen. 
+  if(nemesisEventStatus.alarmEvent===data)return;   
   
-  if(mapSwitch === "true"){
-    localStorage.removeItem("NemesisMapSwitch")
-    return
-  }
+  //entsprechen sich die beiden Werte in localStorage und Firebase nicht, wird das Objekt nemesisEventStatus im key alarmEvent aktualisiert. 
+  nemesisEventStatus.alarmEvent = data; 
+
+  //Das gesamte Objekt nemesisEventStatus mit dem aktualisierten Key alarmEvent wird im localStorage gespeichert. 
+  localStorage.setItem(
+    `${roomId}-localNemesisEventStatus`,
+    JSON.stringify(nemesisEventStatus)
+  );
   
    if (data) {
         openModal("Alarm ausgelöst", "Isolationsraum kann genutzt werden.");  
@@ -461,13 +487,18 @@ db.ref(`rooms/${roomId}/selfdestructEvent`).on("value", (snapshot) => {
   
   if (data === null) return;
   
+  //Es wird überprüft, ob es bezüglich selfdestructEvent überhaupt eine Abweichung gibt zwischen localStorage und Firebase. Wenn nicht, wird der Code abgebrochen. 
+  if(nemesisEventStatus.selfdestructEvent===data)return;   
   
-  const mapSwitch = localStorage.getItem("NemesisMapSwitch");
+  //entsprechen sich die beiden Werte in localStorage und Firebase nicht, wird das Objekt nemesisEventStatus im key selfdestructEvent aktualisiert. 
+  nemesisEventStatus.selfdestructEvent = data; 
 
-  if(mapSwitch === "true"){
-    localStorage.removeItem("NemesisMapSwitch")
-    return
-  }
+  //Das gesamte Objekt nemesisEventStatus mit dem aktualisierten Key selfdestructEvent wird im localStorage gespeichert. 
+  localStorage.setItem(
+    `${roomId}-localNemesisEventStatus`,
+    JSON.stringify(nemesisEventStatus)
+  );
+ 
 
   if (data) {
     openModal("Selbstzerstörung aktiviert", "Das Haupttor zum Bunker öffnet sich, sobald das Zeitplättchen vorrückt und dadurch die gelbe Seite des Selbstzerstörungsplättchens sichtbar wird.");
@@ -546,58 +577,6 @@ function loadGame(roomId) {
 };
 
 
-
-function initFirebase(roomId){
-  
-  
-  db.ref(`rooms/${roomId}`).once("value", (snapshot) => {
-  
-  const data = snapshot.val();
-  
-  if (data === null) return;
-    
-  if(data.xenoEvent===true){
-    
-   xenoEvent.classList.add("active");
-    
-  }
-    
-    else{
-   xenoEvent.classList.remove("active");
-
-    }
-    
-    
-   if(data.deathEvent===true){
-      deathEvent.classList.add("active");
-   }
-    
-    else{
-       deathEvent.classList.remove("active");
-    }
-    
-    
-     if(data.alarmEvent===true){
-      alarmEvent.classList.add("active");
-   }
-    
-    else{
-       alarmEvent.classList.remove("active");
-    }
-    
-    
-    if(data.selfdestructEvent===true){
-      selfdestructEvent.classList.add("active");
-   }
-    
-    else{
-       selfdestructEvent.classList.remove("active");
-    }
-                                    }
-            )
-  
-  
-}
 
 
 acceptResetModal.addEventListener("click", ()=>{
@@ -679,6 +658,33 @@ showEvents.addEventListener("change", () => {
         eventSidebar.classList.add("hidden")
     }
 });
+
+
+function setNemesisEventStatus(){
+   
+  //Die Funktion holt Event Informationen zum aktuellen Raum aus dem localStorage und speichert sie in nemesisEventStatus. Über parse wird der im localStorage hinterlegte String gleich als Objekt ausgegeebn.  
+  let nemesisEventStatus = JSON.parse(
+    localStorage.getItem(`${roomId}-localNemesisEventStatus`)
+  );
+  
+  //Es wird überprüft, ob nun überaupt Informationen in nemesisEventStatus gespeichert wird. Wenn im local Storage keine Infos zu finden waren, wird null zurückgegeben. Wenn keine Infos, wird nemesisEventStatus als objekt gespeichert, in dem zunächst alle Werte false sind - Ausgangssituation. 
+  if(nemesisEventStatus===null){
+    
+    nemesisEventStatus = {
+      xenoEvent: false, 
+      deathEvent: false, 
+      alarmEvent: false, 
+      selfdestructEvent: false, 
+    };
+  }
+  
+   localStorage.setItem(
+    `${roomId}-localNemesisEventStatus`,
+    JSON.stringify(nemesisEventStatus)
+  );
+  
+  return nemesisEventStatus;
+}
 
 
 
