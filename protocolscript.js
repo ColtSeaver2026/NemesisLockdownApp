@@ -380,148 +380,156 @@ db.ref(`rooms/${roomId}/xenoEvent`).on("value", (snapshot) => {
   
   //Die Info von xenoEvent wird in Data gespeichert. 
   const data = snapshot.val();
-  
-  //Wenn xenoEvent nicht vorhanden, endet die Ausführung des Codes. 
-  if (data === null) return;
-  
-  //Es wird überprüft, ob es bezüglich xenoEvent überhaupt eine Abweichung gibt zwischen localStorage und Firebase. Wenn nicht, wird der Code abgebrochen. 
-  if(nemesisEventStatus.xenoEvent===data)return;   
-  
-  //entsprechen sich die beiden Werte in localStorage und Firebase nicht, wird das Objekt nemesisEventStatus im key xenoEvent aktualisiert. 
-  nemesisEventStatus.xenoEvent = data; 
 
-  //Das gesamte Objekt nemesisEventStatus mit dem aktualisierten Key xenoEvent wird im localStorage gespeichert. 
-  localStorage.setItem(
+if (data === null) return;
+
+// Button IMMER an Firebase anpassen
+if (data) {
+    xenoEvent.classList.add("active");
+} else {
+    xenoEvent.classList.remove("active");
+}
+
+// Prüfen, ob sich überhaupt etwas geändert hat
+if (nemesisEventStatus.xenoEvent === data) return;
+
+// localStorage aktualisieren
+nemesisEventStatus.xenoEvent = data;
+
+localStorage.setItem(
     `${roomId}-localNemesisEventStatus`,
     JSON.stringify(nemesisEventStatus)
-  );
-  
-  
-  if (data) {
-    openModal("Erste Begegnung", "Entscheide dich für eines deiner beiden Ziele.");
-    xenoEvent.classList.add("active")
-  }
-  
-  if (!data) {
-    xenoEvent.classList.remove("active")
-  }
-  
-  
-  
-                                    }
-            )
+);
 
+// Modal nur beim Aktivieren anzeigen
+if (data) {
+    openModal(
+        "Erste Begegnung",
+        "Entscheide dich für eines deiner beiden Ziele."
+    );
+}
+
+}
+            )
 
 
 db.ref(`rooms/${roomId}/deathEvent`).on("value", (snapshot) => {
-  
-  const data = snapshot.val();
-  
-  if (data === null) return;
-  
-  //Es wird überprüft, ob es bezüglich deathEvent überhaupt eine Abweichung gibt zwischen localStorage und Firebase. Wenn nicht, wird der Code abgebrochen. 
-  if(nemesisEventStatus.deathEvent===data)return;   
-  
-  //entsprechen sich die beiden Werte in localStorage und Firebase nicht, wird das Objekt nemesisEventStatus im key deathEvent aktualisiert. 
-  nemesisEventStatus.deathEvent = data; 
 
-  //Das gesamte Objekt nemesisEventStatus mit dem aktualisierten Key deathEvent wird im localStorage gespeichert. 
+  const data = snapshot.val();
+
+  // Wenn deathEvent nicht vorhanden, endet die Ausführung des Codes.
+  if (data === null) return;
+
+  // Der Button wird immer an den aktuellen Firebase-Zustand angepasst.
+  if (data) {
+    deathEvent.classList.add("active");
+  } else {
+    deathEvent.classList.remove("active");
+  }
+
+  // Es wird überprüft, ob es bezüglich deathEvent überhaupt eine Abweichung
+  // zwischen localStorage und Firebase gibt. Wenn nicht, wird der Code beendet.
+  if (nemesisEventStatus.deathEvent === data) return;
+
+  // Entsprechen sich die beiden Werte nicht, wird das Objekt aktualisiert.
+  nemesisEventStatus.deathEvent = data;
+
+  // Das aktualisierte Objekt wird im localStorage gespeichert.
   localStorage.setItem(
     `${roomId}-localNemesisEventStatus`,
     JSON.stringify(nemesisEventStatus)
   );
-  
-  
-  
+
+  // Das Modal wird nur geöffnet, wenn das Ereignis aktiviert wurde.
   if (data) {
-    openModal("Tod des ersten Charakters", "Entscheide dich für eines deiner beiden Ziele. Das Haupttor zum Bunker wurde geöffnet.");             deathEvent.classList.add("active")
+    openModal(
+      "Tod des ersten Charakters",
+      "Entscheide dich für eines deiner beiden Ziele. Das Haupttor zum Bunker wurde geöffnet."
+    );
   }
-  
-  if (!data) {
-    deathEvent.classList.remove("active")
-  }
-  
-  
-  
-                                    }
-            )
+
+});
 
 
 db.ref(`rooms/${roomId}/alarmEvent`).on("value", (snapshot) => {
-  
-  const data = snapshot.val();
-  
-  if (data === null) return;
-  
-  //Es wird überprüft, ob es bezüglich alarmEvent überhaupt eine Abweichung gibt zwischen localStorage und Firebase. Wenn nicht, wird der Code abgebrochen. 
-  if(nemesisEventStatus.alarmEvent===data)return;   
-  
-  //entsprechen sich die beiden Werte in localStorage und Firebase nicht, wird das Objekt nemesisEventStatus im key alarmEvent aktualisiert. 
-  nemesisEventStatus.alarmEvent = data; 
 
-  //Das gesamte Objekt nemesisEventStatus mit dem aktualisierten Key alarmEvent wird im localStorage gespeichert. 
+  const data = snapshot.val();
+
+  // Wenn alarmEvent nicht vorhanden ist, endet die Ausführung des Codes.
+  if (data === null) return;
+
+  // Der Button wird immer an den aktuellen Firebase-Zustand angepasst.
+  if (data) {
+    alarmEvent.classList.add("active");
+  } else {
+    alarmEvent.classList.remove("active");
+  }
+
+  // Es wird überprüft, ob es bezüglich alarmEvent überhaupt eine Abweichung
+  // zwischen localStorage und Firebase gibt. Wenn nicht, wird der Code beendet.
+  if (nemesisEventStatus.alarmEvent === data) return;
+
+  // Entsprechen sich die beiden Werte nicht, wird das Objekt aktualisiert.
+  nemesisEventStatus.alarmEvent = data;
+
+  // Das aktualisierte Objekt wird im localStorage gespeichert.
   localStorage.setItem(
     `${roomId}-localNemesisEventStatus`,
     JSON.stringify(nemesisEventStatus)
   );
-  
-   if (data) {
-        openModal("Alarm ausgelöst", "Isolationsraum kann genutzt werden.");  
-        
-        alarmEvent.classList.add("active")
+
+  // Das Modal wird nur geöffnet, wenn das Ereignis aktiviert wurde.
+  if (data) {
+    openModal(
+      "Alarm ausgelöst",
+      "Isolationsraum kann genutzt werden."
+    );
   }
-  
-  if (!data) {
-    alarmEvent.classList.remove("active")
-  }
-  
-  
-  
-                                    }
-            )
+
+});
 
 
 db.ref(`rooms/${roomId}/selfdestructEvent`).on("value", (snapshot) => {
-  
-  const data = snapshot.val();
-  
-  if (data === null) return;
-  
-  //Es wird überprüft, ob es bezüglich selfdestructEvent überhaupt eine Abweichung gibt zwischen localStorage und Firebase. Wenn nicht, wird der Code abgebrochen. 
-  if(nemesisEventStatus.selfdestructEvent===data)return;   
-  
-  //entsprechen sich die beiden Werte in localStorage und Firebase nicht, wird das Objekt nemesisEventStatus im key selfdestructEvent aktualisiert. 
-  nemesisEventStatus.selfdestructEvent = data; 
 
-  //Das gesamte Objekt nemesisEventStatus mit dem aktualisierten Key selfdestructEvent wird im localStorage gespeichert. 
+  const data = snapshot.val();
+
+  // Wenn selfdestructEvent nicht vorhanden ist, endet die Ausführung des Codes.
+  if (data === null) return;
+
+  // Der Button wird immer an den aktuellen Firebase-Zustand angepasst.
+  if (data) {
+    selfdestructEvent.classList.add("active");
+  } else {
+    selfdestructEvent.classList.remove("active");
+  }
+
+  // Von selfdestructEvent abhängige Elemente werden immer aktualisiert.
+  checkIsolation();
+  checkEscape();
+
+  // Es wird überprüft, ob es bezüglich selfdestructEvent überhaupt eine
+  // Abweichung zwischen localStorage und Firebase gibt.
+  // Wenn nicht, wird der Code beendet.
+  if (nemesisEventStatus.selfdestructEvent === data) return;
+
+  // Entsprechen sich die beiden Werte nicht, wird das Objekt aktualisiert.
+  nemesisEventStatus.selfdestructEvent = data;
+
+  // Das aktualisierte Objekt wird im localStorage gespeichert.
   localStorage.setItem(
     `${roomId}-localNemesisEventStatus`,
     JSON.stringify(nemesisEventStatus)
   );
- 
 
+  // Das Modal wird nur geöffnet, wenn das Ereignis aktiviert wurde.
   if (data) {
-    openModal("Selbstzerstörung aktiviert", "Das Haupttor zum Bunker öffnet sich, sobald das Zeitplättchen vorrückt und dadurch die gelbe Seite des Selbstzerstörungsplättchens sichtbar wird.");
-
- 
-    selfdestructEvent.classList.add("active");
-    
-    checkIsolation();
-    checkEscape();
+    openModal(
+      "Selbstzerstörung aktiviert",
+      "Das Haupttor zum Bunker öffnet sich, sobald das Zeitplättchen vorrückt und dadurch die gelbe Seite des Selbstzerstörungsplättchens sichtbar wird."
+    );
   }
-  
-  if (!data) {
-    
-   
-    selfdestructEvent.classList.remove("active");
- 
-    checkIsolation(); 
-    checkEscape();
 
-  }
-  
-}
-                               )
+});
 
   
 
